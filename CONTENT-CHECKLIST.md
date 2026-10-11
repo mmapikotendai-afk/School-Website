@@ -10,7 +10,8 @@ The source proposal is a working draft, not verified school publication data.
 - [ ] Admissions windows, fees, required documents, entry criteria and available places.
 - [ ] Current boarding, welfare, sports, clubs and practical-learning details.
 - [x] Postal address and role-labelled telephone numbers supplied for the Head, Deputy Head and Senior Master.
-- [ ] Exact physical address, approved email, office hours and map coordinates.
+- [x] Physical locality and map coordinates cross-checked against two public listings.
+- [ ] Approved email and office hours.
 - [ ] Six to twelve real school photographs with publication approval.
 - [ ] Three approved news stories, verified achievements and confirmed events.
 - [ ] Alumni profiles, projects and the appropriate contact route.

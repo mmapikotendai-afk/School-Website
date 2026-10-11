@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
 import { school, news, events, gallery } from '../lib/content.js';
 assert.equal(new URL(school.portalUrl).protocol, 'https:');
+assert.deepEqual(school.coordinates, [-18.2733326, 30.6652775]);
+assert.equal(new URL(school.directionsUrl).hostname, 'www.openstreetmap.org');
+assert.ok(school.physicalAddress && school.address, 'Map popup requires physical and postal addresses');
 const slugs = new Set();
 for (const article of news) {
   assert.ok(article.id && article.slug && /^[a-z0-9-]+$/.test(article.slug), 'News needs a safe slug and ID');

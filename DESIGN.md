@@ -232,6 +232,10 @@ Portal and news containers are flat paper blocks, with serif headings and muted 
 
 Gallery images sit on square paper mounts; an arrow square changes from navy to red on hover. Captions use the serif face with smaller sans-serif categories. The native modal uses deep navy, a dark backdrop and visible close controls. Escape closes it, arrow keys browse when multiple items exist, and closing restores focus to the originating tile.
 
+### School map
+
+The contact page map uses OpenStreetMap tiles in a rectangular editorial frame with a red bottom rule. A white location panel overlaps the map on desktop and sits above it on mobile. The custom marker uses the authorised crest inside a navy ring with a small red status dot. Leaflet zoom controls adopt the navy interaction color, attribution remains visible, and the popup repeats the school name, physical locality, postal address and directions action. Preserve drag, keyboard and zoom behavior; do not place decorative overlays where they prevent map interaction.
+
 ### Motion
 
 The hero reveals once through a clip-path change from a 5% bottom inset to zero over 0.8s with `cubic-bezier(.16, 1, .3, 1)`. It does not conceal content before hydration. Reduced-motion preference disables the reveal, CSS transitions and animations, and smooth scrolling. Keep new interactions consistent with this restrained treatment.

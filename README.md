@@ -25,6 +25,7 @@ Open http://127.0.0.1:3000. Vercel can use the standard Next.js framework preset
 
 - Responsive Home, About, Academics, Admissions, School Life, News & Events, Gallery, Alumni, Contact, Portal and Privacy pages.
 - Accessible academic tabs, mobile navigation, FAQs, searchable/category-filtered news, event listing, gallery filters and keyboard-enabled native dialog.
+- Interactive React Leaflet map with OpenStreetMap tiles, a branded school marker, popup and directions link. The verified map point is configured in `lib/content.js`; the tile endpoint can be replaced through `NEXT_PUBLIC_MAP_TILE_URL`.
 - Enquiry form with native validation and a locally downloaded draft. No false submission confirmation. Adding an approved `school.email` switches to an explicitly labelled email-app handoff, not server delivery.
 - Separate link to the existing portal; no portal migration, login replacement or access to private academic records.
 - Route-specific metadata, skip link, visible focus, reduced-motion support, local fonts, and honest empty states.

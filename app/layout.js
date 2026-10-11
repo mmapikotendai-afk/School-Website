@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import 'leaflet/dist/leaflet.css';
 import './globals.css';
 import { isPublicLaunch, siteOrigin } from '@/lib/site-config';
 
