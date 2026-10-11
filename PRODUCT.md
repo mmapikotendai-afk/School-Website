@@ -14,7 +14,7 @@ Prospective families, current parents and students, staff and alumni.
 Introduce the school, explain academic pathways, support admissions enquiries, share approved news and photographs, and connect visitors to the separate results portal.
 
 ## Brand Commitments
-Presbyterian High School, Mhondoro, Zimbabwe. Preserve supplied crest and motto NEC TAMEN CONSUMEBATUR. Follow the proposal's traditional academic character, elegant headings, generous whitespace and restrained motion.
+Presbyterian High School, Mhondoro, Zimbabwe. Preserve supplied crest and motto NECTAMEN CONSUMEBATUR. Follow the proposal's traditional academic character, elegant headings, generous whitespace and restrained motion.
 
 ## Evidence on Hand
 User supplied website proposal dated 10 October 2026 and phs.jpeg. School photographs, confirmed contacts, detailed admissions criteria, approved stories and current leadership are not supplied. No invented history, metrics, names or imagery representing the campus.

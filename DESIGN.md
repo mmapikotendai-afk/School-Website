@@ -228,7 +228,7 @@ The paper form container uses its own inset. Labels are semibold navy; fields ar
 
 ### Containers and motto panel
 
-Portal and news containers are flat paper blocks, with serif headings and muted copy. The navy motto panel is the signature editorial feature: oversized serif quotation mark, a white serif motto, a pale translation, and a small uppercase caption separated by a fine translucent rule. Preserve the motto "Nec tamen consumebatur."
+Portal and news containers are flat paper blocks, with serif headings and muted copy. The navy motto panel is the signature editorial feature: oversized serif quotation mark, a white serif motto, a pale translation, and a small uppercase caption separated by a fine translucent rule. Preserve the motto "Nectamen consumebatur."
 
 ### Gallery and lightbox
 
