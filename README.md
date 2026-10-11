@@ -26,6 +26,7 @@ Open http://127.0.0.1:3000. Vercel can use the standard Next.js framework preset
 - Responsive Home, About, Academics, Admissions, School Life, News & Events, Gallery, Alumni, Contact, Portal and Privacy pages.
 - Accessible academic tabs, mobile navigation, FAQs, searchable/category-filtered news, event listing, gallery filters and keyboard-enabled native dialog.
 - Interactive React Leaflet map with OpenStreetMap tiles, a branded school marker, popup and directions link. The verified map point is configured in `lib/content.js`; the tile endpoint can be replaced through `NEXT_PUBLIC_MAP_TILE_URL`.
+- Responsive School Policies & Guidelines directory with six categories, keyword search, filtering, an approved-content empty state, and detail routes with PDF viewing, downloads, related documents and enquiry contacts.
 - Enquiry form with native validation and a locally downloaded draft. No false submission confirmation. Adding an approved `school.email` switches to an explicitly labelled email-app handoff, not server delivery.
 - Separate link to the existing portal; no portal migration, login replacement or access to private academic records.
 - Route-specific metadata, skip link, visible focus, reduced-motion support, local fonts, and honest empty states.
@@ -33,6 +34,8 @@ Open http://127.0.0.1:3000. Vercel can use the standard Next.js framework preset
 ## School content
 
 Edit `lib/content.js`. Keep `news` and `events` empty until school approval; published records require `approved: true` and `status: 'published'`. Store only public content here. Upload approved photos to `public/images/` and add captions, meaningful alternative text and categories to `gallery`. Remove an item from the live gallery by setting `approved: false`.
+
+Policy records live in `lib/policies.js` until the administrator dashboard supplies a public-content API. Each record supports an ID, slug, title, description, category, keywords, publication and update dates, PDF URL, filename, status and approval flag. Put approved PDFs in `public/policies/`. A policy requires both `status: 'published'` and `approved: true`, plus all public fields, before it appears. Draft records remain private and must not contain invented dates or rules.
 
 `CONTENT-CHECKLIST.md` tracks the unresolved school input. No unverified telephone numbers, pass rates, founder dates, leadership names or stock campus photographs have been published. The supplied logo is currently the only gallery image.
 

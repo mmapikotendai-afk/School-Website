@@ -20,7 +20,9 @@ Presbyterian High School, Mhondoro, Zimbabwe. Preserve supplied crest and motto 
 User supplied website proposal dated 10 October 2026 and phs.jpeg. School photographs, confirmed contacts, detailed admissions criteria, approved stories and current leadership are not supplied. No invented history, metrics, names or imagery representing the campus.
 
 ## Capabilities and Constraints
-Nine public sections, external portal link, searchable approved news, event listing, filterable gallery with accessible lightbox, and enquiry preparation. The draft has no verified recipient or contact delivery service. Content is maintained in dedicated public-content files; integration into the existing private admin requires that separate codebase and authorization. No results database access. Online applications and file uploads are future scope.
+Public sections include a searchable School Policies & Guidelines directory under About Us, an external portal link, searchable approved news, event listing, filterable gallery with accessible lightbox, and enquiry preparation. Six fixed policy categories organise approved records. Each published policy supports a stable detail URL, embedded PDF, view and download actions, related-policy links and school contact details. The draft has no verified recipient or contact delivery service. Content is maintained in dedicated public-content files; integration into the existing private admin requires that separate codebase and authorization. No results database access. Online applications and file uploads are future scope.
+
+The policy schema is ready for a future adapter to the existing Results Portal administrator dashboard. That integration should support draft creation, editing, PDF upload, approval, publication and update dates while keeping drafts and private student data out of the public build.
 
 ## Open decisions
 School-approved content, contact destination, official domain and existing administrator CMS integration remain pending. This is a private review build. Technical and visual choices follow the user's proposal; no additional standing workflow preferences are inferred.

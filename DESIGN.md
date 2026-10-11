@@ -212,6 +212,8 @@ Shared keyboard focus is an amber 3px outline offset by 5px. Hover moves action 
 
 The utility bar is deep navy; the main masthead is white with the authentic crest and serif school name. Desktop links are semibold navy, become red on hover, and identify the current page with a red underline. The mobile menu expands below the header, includes secondary links, closes on route changes or Escape, and restores focus to its toggle on Escape.
 
+About uses an accessible disclosure button for the school overview and School Policies. Its desktop panel uses a red top rule and restrained shadow; on small screens it becomes part of the existing stacked navigation.
+
 ### Academic pathway tabs
 
 Three broad serif tabs share a baseline. The selected tab uses white and a red bottom edge; hover uses the pale tab surface. Small sans-serif year labels sit above pathway names. Arrow keys, Home and End move selection and focus; the current content is an associated tab panel.
@@ -235,6 +237,10 @@ Gallery images sit on square paper mounts; an arrow square changes from navy to 
 ### School map
 
 The contact page map uses OpenStreetMap tiles in a rectangular editorial frame with a red bottom rule. A white location panel overlaps the map on desktop and sits above it on mobile. The custom marker uses the authorised crest inside a navy ring with a small red status dot. Leaflet zoom controls adopt the navy interaction color, attribution remains visible, and the popup repeats the school name, physical locality, postal address and directions action. Preserve drag, keyboard and zoom behavior; do not place decorative overlays where they prevent map interaction.
+
+### Policy library
+
+Policy categories use numbered, ruled directory rows with square navy icon fields. Search and filtering sit on a white document bar over the paper background. The empty state explains the school-approval status and uses a single red rule. Detail pages reserve a large neutral document canvas for the PDF and place official metadata in a compact definition list.
 
 ### Motion
 

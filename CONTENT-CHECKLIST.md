@@ -2,6 +2,16 @@
 
 The source proposal is a working draft, not verified school publication data.
 
+## School policies
+
+- [ ] Supply each authentic, school-approved policy PDF.
+- [ ] Confirm its public title, short description, category and search keywords.
+- [ ] Confirm the original publication date and most recent update date.
+- [ ] Confirm who should receive policy enquiries.
+- [ ] Mark a record `published` and `approved: true` only after school review.
+
+Until these items are supplied, the policy directory shows an approved-document placeholder and does not publish sample rules, dates or files.
+
 - [x] Supplied crest preserved; motto and proposal palette used.
 - [x] Public pages, navigation, portal handoff and responsive components implemented.
 - [ ] School-approved welcome copy, mission, vision, values and headmaster message.
