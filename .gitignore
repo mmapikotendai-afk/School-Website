@@ -1,0 +1,11 @@
+node_modules/
+.next/
+out/
+dist/
+.env*
+!.env.example
+test-results/
+playwright-report/
+.impeccable/review/
+.sites.local/
+*.zip

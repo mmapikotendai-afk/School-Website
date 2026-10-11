@@ -1,0 +1,33 @@
+﻿import { chromium } from '@playwright/test';
+import { mkdir, writeFile } from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const browser = await chromium.launch({channel:'msedge',headless:true});
+const context = await browser.newContext({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
+const page = await context.newPage();
+const errors=[];page.on('pageerror',e=>errors.push(e.message));
+const origin='http://127.0.0.1:3000';
+const routes=['/','/about/','/academics/','/admissions/','/school-life/','/news/','/gallery/','/alumni/','/contact/','/portal/','/privacy/'];
+await mkdir('.impeccable/review',{recursive:true});
+for (const width of [1440,390]) {
+  await page.setViewportSize({width,height:width===390 ? 844 : 1000});
+  for(const route of routes) {
+    const response=await page.goto(origin+route);assert.equal(response.status(),200,route);
+    await page.evaluate(()=>document.fonts.ready);
+    assert.equal(await page.locator('h1').count(),1,`${route} must have one h1`);
+    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth <= window.innerWidth+1), `${route} overflows at ${width}`);
+    const broken=await page.locator('img').evaluateAll(imgs=>imgs.filter(i=>!i.complete || !i.naturalWidth).map(i=>i.src));assert.deepEqual(broken,[]);
+    if(process.env.CAPTURE === 'true' && ['/', '/admissions/', '/gallery/'].includes(route)) await page.screenshot({path:`.impeccable/review/${route==='/' ? 'home' : route.replaceAll('/','')}-${width}.png`,fullPage:true});
+  }
+}
+await page.goto(origin);await page.getByRole('button',{name:'Open navigation'}).click();assert.equal(await page.locator('#menu-toggle').getAttribute('aria-expanded'),'true');await page.getByRole('navigation',{name:'Main navigation'}).getByRole('link',{name:'Academics',exact:true}).click();await page.waitForURL('**/academics/');assert.equal(await page.locator('#menu-toggle').getAttribute('aria-expanded'),'false');
+await page.getByRole('tab',{name:/Advanced Level/}).click();await page.getByRole('tabpanel').getByRole('heading',{name:'Take the next step with purpose.'}).waitFor();await page.getByRole('tab',{name:/Advanced Level/}).press('Home');assert.equal(await page.getByRole('tab',{name:/Junior Secondary/}).getAttribute('aria-selected'),'true');
+await page.goto(origin+'/admissions/');await page.locator('summary').filter({hasText:'Can I submit an application online?'}).click();assert.equal(await page.locator('details[open]').count(),1);
+await page.goto(origin+'/news/');await page.getByRole('searchbox').fill('test story');await page.getByRole('heading',{name:'No stories match just yet.'}).waitFor();await page.getByRole('button',{name:'Clear filters'}).click();await page.getByRole('heading',{name:'Our next stories start here.'}).waitFor();await page.getByRole('button',{name:'Events calendar'}).click();await page.getByRole('heading',{name:'Dates to look forward to.'}).waitFor();
+await page.goto(origin+'/gallery/');await page.getByRole('button',{name:'Campus',exact:true}).click();await page.getByRole('heading',{name:'A window into campus.'}).waitFor();await page.getByRole('button',{name:'All',exact:true}).click();await page.locator('.gallery-item').click();assert.equal(await page.locator('dialog').evaluate(d=>d.open),true);await page.keyboard.press('Escape');assert.equal(await page.locator('dialog').evaluate(d=>d.open),false);assert.equal(await page.locator('.gallery-item').evaluate(e=>e===document.activeElement),true);
+await page.goto(origin+'/contact/?topic=Alumni');await page.getByLabel('Your name',{exact:true}).fill('Review User');await page.getByLabel('Email address',{exact:true}).fill('review@example.com');assert.equal(await page.locator('select').inputValue(),'Alumni');await page.getByLabel('Your enquiry',{exact:true}).fill('I would like to reconnect with the school community.');await page.getByRole('checkbox').check();const downloadPromise=page.waitForEvent('download');await page.getByRole('button',{name:'Download enquiry draft'}).click();const download=await downloadPromise;assert.equal(download.suggestedFilename(),'presbyterian-high-school-enquiry.txt');await page.getByRole('status').filter({hasText:'It has not been sent'}).waitFor();
+const links=new Set();for(const route of routes){await page.goto(origin+route);const hrefs=await page.locator('a[href]').evaluateAll(as=>as.map(a=>a.getAttribute('href')).filter(h=>h.startsWith('/')));hrefs.forEach(h=>links.add(h.split('?')[0].split('#')[0]));}
+for(const href of links){const r=await context.request.get(origin+href);assert.equal(r.status(),200,`Broken link ${href}`);}
+assert.deepEqual(errors,[],'Browser JavaScript errors');
+const summary={routes:routes.length,viewports:[1440,390],internalLinks:links.size,passed:['navigation','keyboard tabs','FAQs','news search and filters','events empty state','gallery filter and dialog focus','enquiry draft download','no horizontal overflow','images loaded','no browser exceptions']};
+await writeFile('.impeccable/review/check-results.json',JSON.stringify(summary,null,2));console.log(JSON.stringify(summary,null,2));await browser.close();
+

@@ -1,0 +1,456 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-11T13:37:49.623Z",
+  "title": "Design System: Presbyterian High School",
+  "extensions": {
+    "colorMeta": {
+      "navy": {
+        "role": "primary",
+        "displayName": "Navy",
+        "tonalRamp": [
+          "oklch(15.00% 0.12063 271.67)",
+          "oklch(26.43% 0.12063 271.67)",
+          "oklch(37.86% 0.12063 271.67)",
+          "oklch(49.29% 0.12063 271.67)",
+          "oklch(60.71% 0.12063 271.67)",
+          "oklch(72.14% 0.12063 271.67)",
+          "oklch(83.57% 0.12063 271.67)",
+          "oklch(95.00% 0.12063 271.67)"
+        ]
+      },
+      "deep": {
+        "role": "primary",
+        "displayName": "Deep",
+        "tonalRamp": [
+          "oklch(15.00% 0.08886 271.38)",
+          "oklch(26.43% 0.08886 271.38)",
+          "oklch(37.86% 0.08886 271.38)",
+          "oklch(49.29% 0.08886 271.38)",
+          "oklch(60.71% 0.08886 271.38)",
+          "oklch(72.14% 0.08886 271.38)",
+          "oklch(83.57% 0.08886 271.38)",
+          "oklch(95.00% 0.08886 271.38)"
+        ]
+      },
+      "red": {
+        "role": "primary",
+        "displayName": "Red",
+        "tonalRamp": [
+          "oklch(15.00% 0.18703 25.06)",
+          "oklch(26.43% 0.18703 25.06)",
+          "oklch(37.86% 0.18703 25.06)",
+          "oklch(49.29% 0.18703 25.06)",
+          "oklch(60.71% 0.18703 25.06)",
+          "oklch(72.14% 0.18703 25.06)",
+          "oklch(83.57% 0.18703 25.06)",
+          "oklch(95.00% 0.18703 25.06)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "tonalRamp": [
+          "oklch(15.00% 0.03952 277.10)",
+          "oklch(26.43% 0.03952 277.10)",
+          "oklch(37.86% 0.03952 277.10)",
+          "oklch(49.29% 0.03952 277.10)",
+          "oklch(60.71% 0.03952 277.10)",
+          "oklch(72.14% 0.03952 277.10)",
+          "oklch(83.57% 0.03952 277.10)",
+          "oklch(95.00% 0.03952 277.10)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "tonalRamp": [
+          "oklch(15.00% 0.02553 277.06)",
+          "oklch(26.43% 0.02553 277.06)",
+          "oklch(37.86% 0.02553 277.06)",
+          "oklch(49.29% 0.02553 277.06)",
+          "oklch(60.71% 0.02553 277.06)",
+          "oklch(72.14% 0.02553 277.06)",
+          "oklch(83.57% 0.02553 277.06)",
+          "oklch(95.00% 0.02553 277.06)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "tonalRamp": [
+          "oklch(15.00% 0.00540 95.10)",
+          "oklch(26.43% 0.00540 95.10)",
+          "oklch(37.86% 0.00540 95.10)",
+          "oklch(49.29% 0.00540 95.10)",
+          "oklch(60.71% 0.00540 95.10)",
+          "oklch(72.14% 0.00540 95.10)",
+          "oklch(83.57% 0.00540 95.10)",
+          "oklch(95.00% 0.00540 95.10)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Line",
+        "tonalRamp": [
+          "oklch(15.00% 0.00812 286.24)",
+          "oklch(26.43% 0.00812 286.24)",
+          "oklch(37.86% 0.00812 286.24)",
+          "oklch(49.29% 0.00812 286.24)",
+          "oklch(60.71% 0.00812 286.24)",
+          "oklch(72.14% 0.00812 286.24)",
+          "oklch(83.57% 0.00812 286.24)",
+          "oklch(95.00% 0.00812 286.24)"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "White",
+        "tonalRamp": [
+          "oklch(15.00% 0.00000 0.00)",
+          "oklch(26.43% 0.00000 0.00)",
+          "oklch(37.86% 0.00000 0.00)",
+          "oklch(49.29% 0.00000 0.00)",
+          "oklch(60.71% 0.00000 0.00)",
+          "oklch(72.14% 0.00000 0.00)",
+          "oklch(83.57% 0.00000 0.00)",
+          "oklch(95.00% 0.00000 0.00)"
+        ]
+      },
+      "focus": {
+        "role": "neutral",
+        "displayName": "Focus",
+        "tonalRamp": [
+          "oklch(15.00% 0.12740 58.47)",
+          "oklch(26.43% 0.12740 58.47)",
+          "oklch(37.86% 0.12740 58.47)",
+          "oklch(49.29% 0.12740 58.47)",
+          "oklch(60.71% 0.12740 58.47)",
+          "oklch(72.14% 0.12740 58.47)",
+          "oklch(83.57% 0.12740 58.47)",
+          "oklch(95.00% 0.12740 58.47)"
+        ]
+      },
+      "field-border": {
+        "role": "neutral",
+        "displayName": "Field Border",
+        "tonalRamp": [
+          "oklch(15.00% 0.01588 273.79)",
+          "oklch(26.43% 0.01588 273.79)",
+          "oklch(37.86% 0.01588 273.79)",
+          "oklch(49.29% 0.01588 273.79)",
+          "oklch(60.71% 0.01588 273.79)",
+          "oklch(72.14% 0.01588 273.79)",
+          "oklch(83.57% 0.01588 273.79)",
+          "oklch(95.00% 0.01588 273.79)"
+        ]
+      },
+      "placeholder": {
+        "role": "neutral",
+        "displayName": "Placeholder",
+        "tonalRamp": [
+          "oklch(15.00% 0.01726 277.60)",
+          "oklch(26.43% 0.01726 277.60)",
+          "oklch(37.86% 0.01726 277.60)",
+          "oklch(49.29% 0.01726 277.60)",
+          "oklch(60.71% 0.01726 277.60)",
+          "oklch(72.14% 0.01726 277.60)",
+          "oklch(83.57% 0.01726 277.60)",
+          "oklch(95.00% 0.01726 277.60)"
+        ]
+      },
+      "light-hover": {
+        "role": "neutral",
+        "displayName": "Light Hover",
+        "tonalRamp": [
+          "oklch(15.00% 0.02147 285.98)",
+          "oklch(26.43% 0.02147 285.98)",
+          "oklch(37.86% 0.02147 285.98)",
+          "oklch(49.29% 0.02147 285.98)",
+          "oklch(60.71% 0.02147 285.98)",
+          "oklch(72.14% 0.02147 285.98)",
+          "oklch(83.57% 0.02147 285.98)",
+          "oklch(95.00% 0.02147 285.98)"
+        ]
+      },
+      "filter-hover": {
+        "role": "neutral",
+        "displayName": "Filter Hover",
+        "tonalRamp": [
+          "oklch(15.00% 0.00947 279.68)",
+          "oklch(26.43% 0.00947 279.68)",
+          "oklch(37.86% 0.00947 279.68)",
+          "oklch(49.29% 0.00947 279.68)",
+          "oklch(60.71% 0.00947 279.68)",
+          "oklch(72.14% 0.00947 279.68)",
+          "oklch(83.57% 0.00947 279.68)",
+          "oklch(95.00% 0.00947 279.68)"
+        ]
+      },
+      "tab-hover": {
+        "role": "neutral",
+        "displayName": "Tab Hover",
+        "tonalRamp": [
+          "oklch(15.00% 0.00413 301.42)",
+          "oklch(26.43% 0.00413 301.42)",
+          "oklch(37.86% 0.00413 301.42)",
+          "oklch(49.29% 0.00413 301.42)",
+          "oklch(60.71% 0.00413 301.42)",
+          "oklch(72.14% 0.00413 301.42)",
+          "oklch(83.57% 0.00413 301.42)",
+          "oklch(95.00% 0.00413 301.42)"
+        ]
+      },
+      "note-surface": {
+        "role": "neutral",
+        "displayName": "Note Surface",
+        "tonalRamp": [
+          "oklch(15.00% 0.00676 277.16)",
+          "oklch(26.43% 0.00676 277.16)",
+          "oklch(37.86% 0.00676 277.16)",
+          "oklch(49.29% 0.00676 277.16)",
+          "oklch(60.71% 0.00676 277.16)",
+          "oklch(72.14% 0.00676 277.16)",
+          "oklch(83.57% 0.00676 277.16)",
+          "oklch(95.00% 0.00676 277.16)"
+        ]
+      },
+      "note-text": {
+        "role": "neutral",
+        "displayName": "Note Text",
+        "tonalRamp": [
+          "oklch(15.00% 0.04646 272.16)",
+          "oklch(26.43% 0.04646 272.16)",
+          "oklch(37.86% 0.04646 272.16)",
+          "oklch(49.29% 0.04646 272.16)",
+          "oklch(60.71% 0.04646 272.16)",
+          "oklch(72.14% 0.04646 272.16)",
+          "oklch(83.57% 0.04646 272.16)",
+          "oklch(95.00% 0.04646 272.16)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Hero display",
+        "purpose": "Homepage headline, with responsive overrides."
+      },
+      "headline": {
+        "displayName": "Section headline",
+        "purpose": "Base second-level heading."
+      },
+      "title": {
+        "displayName": "Section title",
+        "purpose": "Base third-level heading."
+      },
+      "body": {
+        "displayName": "Reading text",
+        "purpose": "Default body copy."
+      },
+      "lead": {
+        "displayName": "Introductory text",
+        "purpose": "Opening paragraph emphasis."
+      },
+      "label": {
+        "displayName": "Semibold label",
+        "purpose": "Form labels and desktop navigation."
+      },
+      "button": {
+        "displayName": "Action label",
+        "purpose": "Primary and light button text."
+      }
+    },
+    "shadows": [
+      {
+        "name": "crest-mount",
+        "value": "0 12px 28px #11184440",
+        "purpose": "White crest mount on navy."
+      },
+      {
+        "name": "mobile-navigation",
+        "value": "0 14px 20px #141c4c12",
+        "purpose": "Expanded menu below masthead."
+      }
+    ],
+    "motion": [
+      {
+        "name": "state-duration",
+        "value": "0.2s",
+        "purpose": "Button color, tab surface, gallery arrow surface and action arrow transform."
+      },
+      {
+        "name": "state-easing",
+        "value": "ease",
+        "purpose": "Implicit CSS easing on the implemented transitions."
+      },
+      {
+        "name": "arrow-hover",
+        "value": "translateX(3px)",
+        "purpose": "Text-link and button arrow movement."
+      },
+      {
+        "name": "hero-duration",
+        "value": "0.8s",
+        "purpose": "One-time clip-path reveal."
+      },
+      {
+        "name": "hero-easing",
+        "value": "cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "Hero reveal timing."
+      },
+      {
+        "name": "hero-clip-path",
+        "value": "inset(0 0 5% 0) -> inset(0 0 0% 0)",
+        "purpose": "Reveal preserves readable content."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce",
+        "purpose": "Disable hero reveal, CSS animations and transitions, and smooth scrolling."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide",
+        "value": "(min-width:1500px)"
+      },
+      {
+        "name": "compact-desktop",
+        "value": "(max-width:1180px)"
+      },
+      {
+        "name": "tablet",
+        "value": "(max-width:900px)"
+      },
+      {
+        "name": "mobile",
+        "value": "(max-width:720px)"
+      },
+      {
+        "name": "narrow-mobile",
+        "value": "(max-width:370px)"
+      }
+    ],
+    "focus": {
+      "outline": "3px solid #ae6217",
+      "outlineOffset": "5px"
+    },
+    "backdrops": {
+      "lightbox": "#0d1028e8"
+    },
+    "provenance": {
+      "mode": "source-inspection",
+      "sources": [
+        "app/globals.css",
+        "app/page.js",
+        "components/Interactive.js",
+        "components/Header.js",
+        "components/Footer.js",
+        "components/PageContent.js",
+        "PRODUCT.md"
+      ],
+      "visualAuthority": "Existing direction contract and supplied school proposal; no approved comp.",
+      "tonalRamps": "Synthesized OKLCH display aids, not implemented palette tokens. Constant chroma may be gamut-mapped by the browser.",
+      "validationLimit": "Impeccable launcher unavailable; source inspection used."
+    }
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Main action on white and paper surfaces.",
+      "html": "<a class=\"ds-primary ds-focus\" href=\"#school\">Explore our school <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 17 17 7M7 7h10v10\"/></svg></a>",
+      "css": ".ds-primary{display:inline-flex;align-items:center;justify-content:center;gap:30px;min-height:52px;padding:13px 23px;border:0;border-radius:3px;font:600 16px/1.4 var(--sans, SourceSans, 'Segoe UI', sans-serif);text-decoration:none;cursor:pointer;transition:background .2s,color .2s;background:var(--navy,#202a70);color:var(--white,#fff)}.ds-primary:hover{background:var(--deep,#141c4c)}.ds-primary svg{transition:transform .2s}.ds-primary:hover svg{transform:translateX(3px)}.ds-focus:focus-visible{outline:3px solid #ae6217;outline-offset:5px}@media(prefers-reduced-motion:reduce){.ds-primary,.ds-primary svg{transition:none}}"
+    },
+    {
+      "name": "Light Button",
+      "kind": "button",
+      "refersTo": "button-light",
+      "description": "Admission action on a navy section; preview includes its supporting surface.",
+      "html": "<div class=\"ds-dark\"><a class=\"ds-light ds-focus\" href=\"#admissions\">Explore admissions <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 17 17 7M7 7h10v10\"/></svg></a></div>",
+      "css": ".ds-dark{background:var(--navy,#202a70);padding:24px}.ds-light{display:inline-flex;align-items:center;justify-content:center;gap:30px;min-height:52px;padding:13px 23px;border:0;border-radius:3px;font:600 16px/1.4 var(--sans, SourceSans, 'Segoe UI', sans-serif);text-decoration:none;cursor:pointer;transition:background .2s,color .2s;background:var(--white,#fff);color:var(--navy,#202a70)}.ds-light:hover{background:#eaeafa}.ds-light svg{transition:transform .2s}.ds-light:hover svg{transform:translateX(3px)}.ds-focus:focus-visible{outline:3px solid #ae6217;outline-offset:5px}@media(prefers-reduced-motion:reduce){.ds-light,.ds-light svg{transition:none}}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Labeled enquiry field with native validation and shared focus.",
+      "html": "<label class=\"ds-label\">Your name<input class=\"ds-input ds-focus\" name=\"name\" autocomplete=\"name\" required maxlength=\"120\" placeholder=\"Full name\"></label>",
+      "css": ".ds-label{display:block;font:600 14px/1.65 var(--sans, SourceSans, 'Segoe UI', sans-serif);color:var(--navy,#202a70)}.ds-input{display:block;width:100%;background:var(--white,#fff);border:1px solid #b5b8c3;border-radius:2px;min-height:46px;padding:10px 12px;font:400 15px/1.65 var(--sans, SourceSans, 'Segoe UI', sans-serif);color:var(--ink,#202338);margin-top:8px;caret-color:var(--red,#bd252b)}.ds-input::placeholder{color:#6b6d78}.ds-focus:focus-visible{outline:3px solid #ae6217;outline-offset:5px}"
+    },
+    {
+      "name": "Main Navigation",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "Semibold links with a red current-page underline.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Preview navigation\"><a class=\"ds-focus\" href=\"#home\" aria-current=\"page\">Home</a><a class=\"ds-focus\" href=\"#about\">About</a><a class=\"ds-focus\" href=\"#academics\">Academics</a></nav>",
+      "css": ".ds-nav{display:flex;align-items:center;gap:25px;font:600 14px/1.65 var(--sans, SourceSans, 'Segoe UI', sans-serif);color:var(--navy,#202a70)}.ds-nav>a{padding:10px 0;position:relative;color:inherit;text-decoration:none;white-space:nowrap}.ds-nav>a[aria-current=page]::after{content:'';position:absolute;bottom:1px;left:0;right:0;height:2px;background:var(--red,#bd252b)}.ds-nav>a:hover{color:var(--red,#bd252b)}.ds-focus:focus-visible{outline:3px solid #ae6217;outline-offset:5px}"
+    },
+    {
+      "name": "Category Filters",
+      "kind": "chip",
+      "refersTo": "filter",
+      "description": "Paper category controls with navy selected state; preview states are static.",
+      "html": "<div class=\"ds-filters\" aria-label=\"News categories\"><button class=\"ds-focus\" aria-pressed=\"true\">All</button><button class=\"ds-focus\" aria-pressed=\"false\">Academics</button><button class=\"ds-focus\" aria-pressed=\"false\">Sports</button></div>",
+      "css": ".ds-filters{display:flex;flex-wrap:wrap;gap:9px;padding:5px 0 26px;border-bottom:1px solid var(--line,#dddde3)}.ds-filters button{padding:7px 16px;border:0;border-radius:3px;font:400 14px/1.65 var(--sans, SourceSans, 'Segoe UI', sans-serif);background:var(--paper,#f7f6f2);color:var(--ink,#202338);min-height:40px;cursor:pointer}.ds-filters button[aria-pressed=true]{background:var(--navy,#202a70);color:var(--white,#fff)}.ds-filters button:hover:not([aria-pressed=true]){background:#e7e8ef}.ds-focus:focus-visible{outline:3px solid #ae6217;outline-offset:5px}"
+    },
+    {
+      "name": "Academic Pathway Tabs",
+      "kind": "custom",
+      "refersTo": "programme-tab",
+      "description": "Serif tabs with small year labels and a red selected baseline; visual preview only.",
+      "html": "<div class=\"ds-tabs\" role=\"tablist\" aria-label=\"Academic pathways\"><button class=\"ds-focus\" role=\"tab\" aria-selected=\"true\"><span>FORMS 1 &amp; 2</span>Foundation<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 17 17 7M7 7h10v10\"/></svg></button><button class=\"ds-focus\" role=\"tab\" aria-selected=\"false\" tabindex=\"-1\"><span>FORMS 3 &amp; 4</span>Ordinary Level<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 17 17 7M7 7h10v10\"/></svg></button><button class=\"ds-focus\" role=\"tab\" aria-selected=\"false\" tabindex=\"-1\"><span>LOWER &amp; UPPER SIXTH</span>Advanced Level<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 17 17 7M7 7h10v10\"/></svg></button></div>",
+      "css": ".ds-tabs{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid #c8cbd9;background:var(--paper,#f7f6f2)}.ds-tabs button{padding:23px 26px;text-align:left;position:relative;font:400 25px/1.3 var(--serif, Playfair, Georgia, serif);color:var(--navy,#202a70);border:0;border-bottom:3px solid transparent;background:none;transition:background .2s;cursor:pointer}.ds-tabs button span{display:block;font:400 12px/1.4 var(--sans, SourceSans, 'Segoe UI', sans-serif);letter-spacing:.045em;margin-bottom:9px;color:var(--muted,#626575)}.ds-tabs button svg{position:absolute;right:24px;top:25px}.ds-tabs button[aria-selected=true]{border-bottom-color:var(--red,#bd252b);background:var(--white,#fff)}.ds-tabs button:hover{background:#eeedf0}.ds-focus:focus-visible{outline:3px solid #ae6217;outline-offset:5px}@media(max-width:720px){.ds-tabs button{font-size:17px;padding:17px 10px}.ds-tabs button span{font-size:10px;min-height:28px;max-width:70px}.ds-tabs button svg{display:none}}@media(prefers-reduced-motion:reduce){.ds-tabs button{transition:none}}"
+    },
+    {
+      "name": "Portal Card",
+      "kind": "card",
+      "refersTo": "portal-card",
+      "description": "Flat paper container for a practical next step.",
+      "html": "<article class=\"ds-card\"><h2>Student &amp; Staff Portal</h2><p>Visit the school portal for results and staff access.</p></article>",
+      "css": ".ds-card{padding:45px;background:var(--paper,#f7f6f2)}.ds-card h2{margin:0;font:500 36px/1.16 var(--serif, Playfair, Georgia, serif);letter-spacing:-.025em;color:var(--navy,#202a70);text-wrap:balance}.ds-card p{font:400 17px/1.65 var(--sans, SourceSans, 'Segoe UI', sans-serif);color:var(--muted,#626575);margin:23px 0 0}@media(max-width:900px){.ds-card{padding:30px}}@media(max-width:720px){.ds-card{padding:28px}.ds-card h2{font-size:33px}}"
+    },
+    {
+      "name": "Motto Panel",
+      "kind": "custom",
+      "refersTo": "motto-panel",
+      "description": "Signature navy editorial block honoring the authentic school motto.",
+      "html": "<div class=\"ds-motto\"><span class=\"ds-mark\" aria-hidden=\"true\">“</span><blockquote>Nec tamen<br>consumebatur.</blockquote><p>Yet it was not consumed.</p><span class=\"ds-caption\">THE WORDS ON OUR CREST</span></div>",
+      "css": ".ds-motto{background:var(--navy,#202a70);padding:52px 48px;color:var(--white,#fff);position:relative}.ds-mark{font:400 100px/.8 var(--serif, Playfair, Georgia, serif);color:#b9bfde}.ds-motto blockquote{font:400 44px/1.3 var(--serif, Playfair, Georgia, serif);margin:4px 0 24px;letter-spacing:-.02em}.ds-motto>p{color:#d7dbed;font:400 20px/1.65 var(--sans, SourceSans, 'Segoe UI', sans-serif);margin:0}.ds-caption{display:block;margin-top:45px;border-top:1px solid #576090;padding-top:21px;font:400 10px/1.65 var(--sans, SourceSans, 'Segoe UI', sans-serif);letter-spacing:.15em;color:#d7dbed}@media(max-width:900px){.ds-motto{padding:35px 28px}.ds-motto blockquote{font-size:36px}}@media(max-width:720px){.ds-motto{padding:36px}.ds-motto blockquote{font-size:39px}.ds-caption{margin-top:25px}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "An Academic Prospectus",
+    "overview": "The school crest anchors a traditional academic identity: navy and white provide structure, red marks emphasis, and warm paper gives longer passages room to breathe. Elegant serif headings sit beside clear sans-serif body copy. The overall character is welcoming, composed and practical.\n\nThis is a source-derived record of the implemented design, refreshed from the existing direction contract. There is no approved visual comp. The supplied crest and motto, generous whitespace and restrained animation are durable commitments from the school proposal. The implementation in `app/globals.css`, `app/page.js` and `components/` is the evidence for the values below; the companion sidecar holds preview snippets and schema extensions.",
+    "keyCharacteristics": [
+      "Crest-led navy, red and white identity with warm paper surfaces.",
+      "Editorial serif headings and readable sans-serif text.",
+      "Spacious columns, fine rules and mostly flat surfaces.",
+      "Restrained motion with visible keyboard focus and reduced-motion support."
+    ],
+    "rules": [
+      {
+        "name": "The Crest Rule",
+        "body": "Preserve the supplied crest's navy, red and white identity and its original proportions.",
+        "section": "colors"
+      },
+      {
+        "name": "The Editorial Surface Rule",
+        "body": "Keep ordinary content flat; use rules and tonal surfaces before adding elevation.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do preserve the supplied crest, its proportions and the school motto.",
+      "Do pair editorial serif headings with readable sans-serif body text.",
+      "Do use whitespace, fine rules and tonal surfaces to structure content.",
+      "Do maintain visible keyboard focus and reduced-motion support."
+    ],
+    "donts": [
+      "Don't introduce a competing palette or alter the crest colors.",
+      "Don't turn ordinary editorial sections into heavily rounded, shadowed cards.",
+      "Don't add continuous decorative animation to this restrained system.",
+      "Don't substitute invented campus imagery for school-approved photographs."
+    ]
+  }
+}
