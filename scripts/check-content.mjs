@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { school, news, events, gallery } from '../lib/content.js';
-import { policies, policyCategories, publishedPolicies } from '../lib/policies.js';
+import { policies, policyCategories, publicPolicies, publishedPolicies } from '../lib/policies.js';
 assert.equal(new URL(school.portalUrl).protocol, 'https:');
 assert.deepEqual(school.coordinates, [-18.2733326, 30.6652775]);
 assert.equal(new URL(school.directionsUrl).hostname, 'www.openstreetmap.org');
@@ -29,6 +29,12 @@ for (const policy of policies) {
     assert.ok(policy.pdfUrl.startsWith('/policies/') && policy.pdfUrl.toLowerCase().endsWith('.pdf'), 'Published policy PDFs belong in /public/policies');
     assert.ok(!Number.isNaN(Date.parse(policy.publishedAt)) && !Number.isNaN(Date.parse(policy.updatedAt)), 'Published policies need valid dates');
   }
+  if (policy.publicDraft) {
+    assert.equal(policy.status, 'draft', 'A public draft must retain draft status');
+    assert.equal(policy.approved, false, 'A public draft must not be represented as approved');
+    assert.ok(policy.sections?.length && policy.pdfUrl.startsWith('/policies/'), 'A public draft needs readable sections and a review PDF');
+  }
 }
 assert.deepEqual(publishedPolicies, policies.filter(policy => policy.status === 'published' && policy.approved === true && policy.slug && policy.title && policy.description && policy.category && policy.publishedAt && policy.updatedAt && policy.pdfUrl));
+assert.ok(publicPolicies.every(policy => policy.status === 'published' || policy.publicDraft === true), 'Public policy selection contains an invalid record');
 console.log('Public content checks passed. No private records or unapproved published content configured.');

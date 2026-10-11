@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next dev --hostname 127.0.0.1",
     "build": "next build",
+    "policies:pdf": "node scripts/generate-policy-pdfs.mjs",
     "preview": "node scripts/preview.mjs",
     "check": "node scripts/check-content.mjs"
   },
