@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { connection } from 'next/server';
 import { ArrowRight, CalendarDays, Search } from 'lucide-react';
 import { listPublishedNews, listPublishedNewsCategories } from '@/lib/cms/queries';
 import { formatDate } from '@/lib/cms/config';
@@ -6,6 +7,7 @@ import { formatDate } from '@/lib/cms/config';
 export const metadata = { title: 'School News', description: 'Read published news, announcements and stories from Presbyterian High School in Mhondoro.' };
 export const revalidate = 60;
 export default async function NewsPage({ searchParams }) {
+  await connection();
   const params = await searchParams; const page = Math.max(1, Number(params?.page) || 1); const category = String(params?.category || '');
   const [{ items, count }, categories] = await Promise.all([listPublishedNews({ page, category, pageSize: 9 }), listPublishedNewsCategories()]);
   const pages = Math.ceil(count / 9);
