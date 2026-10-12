@@ -1,7 +1,11 @@
-import { pageInfo, news } from '@/lib/content';
+import { pageInfo } from '@/lib/content';
 import { publicPolicies } from '@/lib/policies';
 import { siteOrigin } from '@/lib/site-config';
-export const dynamic = 'force-static';
-export default function sitemap() {
-  return ['',...Object.keys(pageInfo).filter(s=>s!=='portal'),'about/policies',...publicPolicies.map(policy=>`about/policies/${policy.slug}`),...news.filter(n=>n.approved&&n.status==='published').map(n=>`news/${n.slug}`)].map(slug=>({url:`${siteOrigin}/${slug ? slug+'/' : ''}`}));
+import { listPublishedEvents, listPublishedNews } from '@/lib/cms/queries';
+
+export const revalidate = 60;
+export default async function sitemap() {
+  const [{ items: news }, events] = await Promise.all([listPublishedNews({ page: 1, pageSize: 1000 }), listPublishedEvents()]);
+  const slugs = ['', ...Object.keys(pageInfo).filter(slug => !['portal', 'news'].includes(slug)), 'news', 'events', 'about/policies', ...publicPolicies.map(policy => `about/policies/${policy.slug}`), ...news.map(item => `news/${item.slug}`), ...events.map(item => `events/${item.slug}`)];
+  return slugs.map(slug => ({ url: `${siteOrigin}/${slug ? `${slug}/` : ''}` }));
 }

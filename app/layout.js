@@ -1,5 +1,4 @@
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import AppChrome from '@/components/AppChrome';
 import 'leaflet/dist/leaflet.css';
 import './globals.css';
 import { isPublicLaunch, siteOrigin } from '@/lib/site-config';
@@ -12,5 +11,5 @@ export const metadata = {
   icons: { icon: '/images/school-crest.jpeg' },
 };
 export default function RootLayout({children}) {
-  return <html lang="en"><body><a href="#main-content" className="skip-link">Skip to content</a><Header/><main id="main-content">{children}</main><Footer/></body></html>;
+  return <html lang="en"><body><AppChrome>{children}</AppChrome></body></html>;
 }

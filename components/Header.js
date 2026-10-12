@@ -35,7 +35,7 @@ export default function Header() {
           <div className="nav-group-trigger"><Link href="/about/" aria-current={aboutCurrent ? 'page' : undefined}>About</Link><button ref={aboutButtonRef} type="button" aria-label="Open About menu" aria-expanded={aboutOpen} aria-controls="about-submenu" onClick={() => setAboutOpen(value => !value)}><ChevronDown size={15} aria-hidden="true" /></button></div>
           <div className="nav-dropdown" id="about-submenu"><Link href="/about/">About our school</Link><Link href="/about/policies/">School Policies</Link></div>
         </div>
-        {remainingNavigation.map(([label, href]) => <Link key={href} href={href} aria-current={pathname === href || pathname === href.slice(0,-1) ? 'page' : undefined}>{label}</Link>)}
+        {remainingNavigation.map(([label, href]) => <Link key={href} href={href} aria-current={pathname === href || pathname === href.slice(0,-1) || pathname.startsWith(href) ? 'page' : undefined}>{label}</Link>)}
         <Link href="/contact/" className="header-contact">Get in touch <ArrowUpRight size={16} aria-hidden="true" /></Link><div className="mobile-secondary"><Link href="/gallery/">Gallery</Link><Link href="/alumni/">Alumni</Link><Link href="/portal/">Student / Staff Portal <ArrowUpRight size={15} aria-hidden="true" /></Link></div>
       </nav>
     </div></header>
