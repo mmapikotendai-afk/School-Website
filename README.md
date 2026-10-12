@@ -26,7 +26,7 @@ Open http://127.0.0.1:3000. Deploy using a Next.js server-capable platform such 
 - Dynamic, responsive News and Events listings and detail pages with filtering, pagination, related news, upcoming/past sections and automatic cache revalidation.
 - Protected CMS routes for dashboard, news, events and media; Admin and Editor access is explicitly authorised in Supabase.
 - Drafts, secure previews, immediate publishing, scheduled publishing, archiving/cancellation and administrator-only permanent deletion.
-- Browser image resizing followed by authoritative Sharp validation, EXIF rotation, resize, metadata removal and WebP compression before Supabase Storage.
+- Batch browser compression to WebP with previews, size savings and separate compression/upload progress, followed by authoritative Sharp validation before Supabase Storage.
 - Database row-level security and audit logs for important content and media changes.
 - Accessible academic tabs, mobile navigation, FAQs, searchable/category-filtered news, event listing, gallery filters and keyboard-enabled native dialog.
 - Interactive React Leaflet map with OpenStreetMap tiles, a branded school marker, popup and directions link. The verified map point is configured in `lib/content.js`; the tile endpoint can be replaced through `NEXT_PUBLIC_MAP_TILE_URL`.
@@ -39,7 +39,9 @@ Open http://127.0.0.1:3000. Deploy using a Next.js server-capable platform such 
 
 1. Create a Supabase project and copy `.env.example` to `.env.local` with the project URL and publishable key.
 2. Apply `supabase/migrations/202610120001_news_events_cms.sql` in the Supabase SQL editor or CLI.
-3. Create the first administrator in Supabase Authentication. Copy that user's UUID, then run:
+3. Apply `supabase/migrations/202610120002_cms_performance_indexes.sql` for admin search/sort indexes and the single-request dashboard summary.
+4. Apply `supabase/migrations/202610120003_gallery_management.sql` to enable approved media-library images to be published safely in the public gallery.
+5. Create the first administrator in Supabase Authentication. Copy that user's UUID, then run:
 
 ```sql
 insert into public.staff_users (id, email, display_name, role)
@@ -50,9 +52,11 @@ There is intentionally no public registration or automatic promotion trigger. Ad
 
 The public database policies expose only records whose state is `published` (or scheduled and now due), whose publication time has arrived, and which are not archived. The application repeats those filters on every public query. Public results are cached for 60 seconds and dashboard mutations trigger immediate revalidation.
 
+Set `CMS_DASHBOARD_RPC=true` after applying the performance migration. Set `CMS_PERF_LOG=true` temporarily to emit structured server timing records for authentication and CMS queries; leave it disabled during normal operation. Protected middleware responses also expose an aggregate `Server-Timing` header without user data.
+
 ## School content
 
-News and events are managed at `/admin/login`. `lib/content.js` continues to hold verified static school information and the gallery. Upload approved gallery photographs to `public/images/` and add captions, meaningful alternative text and categories to `gallery`.
+News, events and gallery media are managed at `/admin/login`. On the Media page, select one or more images, review the compressed previews and savings, then opt approved items into the public Gallery with a caption, meaningful alternative text and category. The supplied crest remains as the static gallery fallback in `lib/content.js`.
 
 Policy records live in `lib/policies.js` until the administrator dashboard supplies a public-content API. Each record supports an ID, slug, title, description, category, keywords, structured sections, publication and update dates, PDF URL, filename, status and approval flag. Put policy PDFs in `public/policies/`. Approved records require both `status: 'published'` and `approved: true`. Five user-requested interim documents are exposed through the explicit `publicDraft` state and carry a prominent “Draft for school review” notice on the page and PDF; they have no invented publication dates. Run `npm run policies:pdf` after changing their text.
 
