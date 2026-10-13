@@ -24,7 +24,7 @@ Open http://127.0.0.1:3000. Deploy using a Next.js server-capable platform such 
 ## Included
 
 - Dynamic, responsive News and Events listings and detail pages with filtering, pagination, related news, upcoming/past sections and automatic cache revalidation.
-- Protected CMS routes for dashboard, news, events and media; Admin and Editor access is explicitly authorised in Supabase.
+- Protected CMS routes for dashboard, news, events, A-Level academics and media; Admin and Editor access is explicitly authorised in Supabase.
 - Drafts, secure previews, immediate publishing, scheduled publishing, archiving/cancellation and administrator-only permanent deletion.
 - Batch browser compression to WebP with previews, size savings and separate compression/upload progress, followed by authoritative Sharp validation before Supabase Storage.
 - Database row-level security and audit logs for important content and media changes.
@@ -41,7 +41,8 @@ Open http://127.0.0.1:3000. Deploy using a Next.js server-capable platform such 
 2. Apply `supabase/migrations/202610120001_news_events_cms.sql` in the Supabase SQL editor or CLI.
 3. Apply `supabase/migrations/202610120002_cms_performance_indexes.sql` for admin search/sort indexes and the single-request dashboard summary.
 4. Apply `supabase/migrations/202610120003_gallery_management.sql` to enable approved media-library images to be published safely in the public gallery.
-5. Create the first administrator in Supabase Authentication. Copy that user's UUID, then run:
+5. Apply `supabase/migrations/202610130001_a_level_academics.sql` to publish the confirmed subject pathways and enable secure management of entry requirements, approved combinations and available places.
+6. Create the first administrator in Supabase Authentication. Copy that user's UUID, then run:
 
 ```sql
 insert into public.staff_users (id, email, display_name, role)
@@ -58,7 +59,7 @@ Performance diagnostics also separate the time spent waiting for Supabase from r
 
 ## School content
 
-News, events and gallery media are managed at `/admin/login`. On the Media page, select one or more images, review the compressed previews and savings, then opt approved items into the public Gallery with a caption, meaningful alternative text and category. The supplied crest remains as the static gallery fallback in `lib/content.js`.
+News, events, A-Level information and gallery media are managed at `/admin/login`. The Academics page manages entry requirements and publishes only school-approved combinations and capacity figures. On the Media page, select one or more images, review the compressed previews and savings, then opt approved items into the public Gallery with a caption, meaningful alternative text and category. The supplied crest remains as the static gallery fallback in `lib/content.js`.
 
 Policy records live in `lib/policies.js` until the administrator dashboard supplies a public-content API. Each record supports an ID, slug, title, description, category, keywords, structured sections, publication and update dates, PDF URL, filename, status and approval flag. Put policy PDFs in `public/policies/`. Approved records require both `status: 'published'` and `approved: true`. Five user-requested interim documents are exposed through the explicit `publicDraft` state and carry a prominent “Draft for school review” notice on the page and PDF; they have no invented publication dates. Run `npm run policies:pdf` after changing their text.
 

@@ -1,10 +1,21 @@
 import assert from 'node:assert/strict';
 import { school, news, events, gallery } from '../lib/content.js';
 import { policies, policyCategories, publicPolicies, publishedPolicies } from '../lib/policies.js';
+import { A_LEVEL_PATHWAYS, DEFAULT_A_LEVEL_REQUIREMENTS } from '../lib/academics.js';
 assert.equal(new URL(school.portalUrl).protocol, 'https:');
 assert.deepEqual(school.coordinates, [-18.2733326, 30.6652775]);
 assert.equal(new URL(school.directionsUrl).hostname, 'www.openstreetmap.org');
 assert.ok(school.physicalAddress && school.address, 'Map popup requires physical and postal addresses');
+assert.deepEqual(A_LEVEL_PATHWAYS, [
+  { id: 'sciences', name: 'Sciences', subjects: ['Geography', 'Mathematics', 'Chemistry', 'Physics', 'Computer Science', 'Biology'] },
+  { id: 'arts', name: 'Arts', subjects: ['Heritage', 'Shona', 'Literature in English', 'History'] },
+  { id: 'commercials', name: 'Commercials', subjects: ['Accounting', 'Business Studies', 'Economics'] },
+], 'A-Level subject pathways must match the school-approved list exactly');
+assert.deepEqual(DEFAULT_A_LEVEL_REQUIREMENTS, {
+  internal_attendance_requirement: 'Must have attended Presbyterian High School from Form 1 through Form 4.',
+  internal_minimum_a_grades: 5,
+  external_minimum_a_grades: 7,
+}, 'A-Level entry requirements must match the supplied criteria');
 const slugs = new Set();
 for (const article of news) {
   assert.ok(article.id && article.slug && /^[a-z0-9-]+$/.test(article.slug), 'News needs a safe slug and ID');

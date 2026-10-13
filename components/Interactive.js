@@ -3,12 +3,13 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, ArrowUpRight, CalendarDays, Check, ChevronLeft, ChevronRight, Download, Image as ImageIcon, Mail, Search, X } from 'lucide-react';
 import { programmes, gallery, galleryCategories, news, events, school } from '@/lib/content';
+import { ALevelPathways } from './ALevelContent';
 
 export function HeroReveal({ children }) {
   return <div className="hero-reveal">{children}</div>;
 }
 
-export function ProgrammeExplorer() {
+export function ProgrammeExplorer({ aLevelCombinations = [] }) {
   const [active, setActive] = useState(0);
   const current = programmes[active];
   const refs = useRef([]);
@@ -20,7 +21,7 @@ export function ProgrammeExplorer() {
     if (e.key === 'End') next = programmes.length - 1;
     if (next !== undefined) { e.preventDefault(); setActive(next); refs.current[next]?.focus(); }
   }
-  return <div className="programme-explorer"><div className="programme-tabs" role="tablist" aria-label="Academic pathways">{programmes.map((p, i) => <button key={p.id} id={`tab-${p.id}`} role="tab" aria-selected={i === active} aria-controls={`panel-${p.id}`} tabIndex={i === active ? 0 : -1} ref={el => { refs.current[i] = el; }} onKeyDown={e => onKey(e, i)} onClick={() => setActive(i)}><span>{p.years}</span>{p.name}<ArrowUpRight size={20} /></button>)}</div><div className="programme-panel" id={`panel-${current.id}`} role="tabpanel" aria-labelledby={`tab-${current.id}`} tabIndex="0"><div><h3>{current.title}</h3><p>{current.description}</p><Link href={`/admissions/?entry=${current.id === 'advanced' ? 'Lower Sixth' : current.id === 'ordinary' ? 'Other entry' : 'Form 1'}`} className="text-link">Enquire about this pathway <ArrowRight size={17} /></Link></div><div><ul className="check-list">{current.details.map(d => <li key={d}><Check size={17} aria-hidden="true" />{d}</li>)}</ul><p className="content-note">{current.note}</p></div></div></div>;
+  return <div className="programme-explorer"><div className="programme-tabs" role="tablist" aria-label="Academic pathways">{programmes.map((p, i) => <button key={p.id} id={`tab-${p.id}`} role="tab" aria-selected={i === active} aria-controls={`panel-${p.id}`} tabIndex={i === active ? 0 : -1} ref={el => { refs.current[i] = el; }} onKeyDown={e => onKey(e, i)} onClick={() => setActive(i)}><span>{p.years}</span>{p.name}<ArrowUpRight size={20} /></button>)}</div><div className="programme-panel" id={`panel-${current.id}`} role="tabpanel" aria-labelledby={`tab-${current.id}`} tabIndex="0"><div><h3>{current.title}</h3><p>{current.description}</p><Link href={`/admissions/?entry=${current.id === 'advanced' ? 'Lower Sixth' : current.id === 'ordinary' ? 'Other entry' : 'Form 1'}`} className="text-link">Enquire about this pathway <ArrowRight size={17} /></Link></div><div><ul className="check-list">{current.details.map(d => <li key={d}><Check size={17} aria-hidden="true" />{d}</li>)}</ul><p className="content-note">{current.note}</p></div>{current.id === 'advanced' && <ALevelPathways combinations={aLevelCombinations}/>}</div></div>;
 }
 
 export function NewsExplorer() {

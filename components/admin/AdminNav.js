@@ -1,13 +1,14 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { CalendarDays, Image, LayoutDashboard, LogOut, Newspaper } from 'lucide-react';
+import { CalendarDays, GraduationCap, Image, LayoutDashboard, LogOut, Newspaper } from 'lucide-react';
 import { logoutAction } from '@/lib/cms/actions';
 
 const links = [
   ['/admin/dashboard/', 'Dashboard', LayoutDashboard],
   ['/admin/news/', 'News', Newspaper],
   ['/admin/events/', 'Events', CalendarDays],
+  ['/admin/academics/', 'Academics', GraduationCap],
   ['/admin/media/', 'Media', Image],
 ];
 export default function AdminNav({ staff }) {
