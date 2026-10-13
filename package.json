@@ -9,7 +9,9 @@
     "policies:pdf": "node scripts/generate-policy-pdfs.mjs",
     "start": "next start --hostname 127.0.0.1",
     "preview": "next start --hostname 127.0.0.1",
-    "check": "node scripts/check-content.mjs"
+    "check": "node scripts/check-content.mjs",
+    "check:performance": "node scripts/check-performance.mjs",
+    "perf:measure": "node scripts/measure-performance.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.7.0",

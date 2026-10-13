@@ -1,13 +1,11 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { motion, useReducedMotion } from 'motion/react';
 import { ArrowRight, ArrowUpRight, CalendarDays, Check, ChevronLeft, ChevronRight, Download, Image as ImageIcon, Mail, Search, X } from 'lucide-react';
 import { programmes, gallery, galleryCategories, news, events, school } from '@/lib/content';
 
 export function HeroReveal({ children }) {
-  const reduced = useReducedMotion();
-  return <motion.div initial={false} animate={reduced ? {} : { clipPath: ['inset(0 0 5% 0)', 'inset(0 0 0% 0)'] }} transition={{ duration: .8, ease: [.16, 1, .3, 1] }}>{children}</motion.div>;
+  return <div className="hero-reveal">{children}</div>;
 }
 
 export function ProgrammeExplorer() {

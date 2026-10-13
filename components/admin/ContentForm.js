@@ -14,7 +14,7 @@ export default function ContentForm({ type, record }) {
   const [status, setStatus] = useState(record?.status || 'draft');
   const action = news ? saveNewsAction : saveEventAction;
   const [formState, formAction, pending] = useActionState(action, { error: '' });
-  const listPath = news ? '/admin/news' : '/admin/events';
+  const listPath = news ? '/admin/news/' : '/admin/events/';
   const publishLabel = status === 'scheduled' ? 'Publication date and time' : 'Published at';
   const visibilityMessage = {
     draft: 'Private draft. It will not appear on the public website.',
@@ -46,7 +46,7 @@ export default function ContentForm({ type, record }) {
         <p className={`publication-visibility visibility-${status}`} role="status"><strong>Public visibility:</strong> {visibilityMessage}</p>
         {['published', 'scheduled'].includes(status) && <label>{publishLabel}<input type="datetime-local" name="publish_at" defaultValue={toLocalInputValue(record?.publish_at || (status === 'published' ? new Date().toISOString() : ''))} required={status === 'scheduled'}/><span className="field-help">Times use the school website timezone.</span></label>}
         <button className="button button-primary" type="submit" disabled={pending}><Save size={17}/>{pending ? 'Saving…' : record ? 'Save changes' : 'Create content'}</button>
-        {record && <Link className="button button-outline" href={`/admin/preview/${news ? 'news' : 'events'}/${record.id}`} target="_blank"><Eye size={17}/>Secure preview</Link>}
+        {record && <Link className="button button-outline" href={`/admin/preview/${news ? 'news' : 'events'}/${record.id}/`} target="_blank"><Eye size={17}/>Secure preview</Link>}
         <Link className="admin-cancel" href={listPath}>Cancel</Link>
       </section>
     </aside>

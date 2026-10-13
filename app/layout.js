@@ -11,5 +11,9 @@ export const metadata = {
   icons: { icon: '/images/school-crest.jpeg' },
 };
 export default function RootLayout({children}) {
-  return <html lang="en"><body><AppChrome>{children}</AppChrome></body></html>;
+  return <html lang="en"><head>
+    <link rel="preload" href="/fonts/playfair.woff2" as="font" type="font/woff2" crossOrigin="anonymous"/>
+    <link rel="preload" href="/fonts/source-sans.woff2" as="font" type="font/woff2" crossOrigin="anonymous"/>
+    <link rel="preload" href="/fonts/source-sans-semibold.woff2" as="font" type="font/woff2" crossOrigin="anonymous"/>
+  </head><body><AppChrome>{children}</AppChrome></body></html>;
 }

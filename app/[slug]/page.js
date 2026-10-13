@@ -5,9 +5,10 @@ import { pageInfo } from '@/lib/content';
 import * as Pages from '@/components/PageContent';
 import { AdmissionCTA } from '@/components/Footer';
 
-const views = {about: Pages.About, academics: Pages.Academics, admissions: Pages.Admissions, 'school-life': Pages.SchoolLife, news: Pages.News, gallery: Pages.Gallery, alumni: Pages.Alumni, contact: Pages.Contact, portal: Pages.Portal, privacy: Pages.Privacy};
+const views = {about: Pages.About, academics: Pages.Academics, admissions: Pages.Admissions, 'school-life': Pages.SchoolLife, gallery: Pages.Gallery, alumni: Pages.Alumni, contact: Pages.Contact, portal: Pages.Portal, privacy: Pages.Privacy};
 export const dynamicParams = false;
-export function generateStaticParams() {return Object.keys(pageInfo).map(slug => ({slug}));}
+// Dedicated routes such as /news must not also be emitted by this static route.
+export function generateStaticParams() {return Object.keys(views).map(slug => ({slug}));}
 export async function generateMetadata({params}) {const {slug}=await params; const info=pageInfo[slug];return {title:info?.short,description:info?.description};}
 export default async function InformationPage({params}) {
   const {slug}=await params; const info=pageInfo[slug]; const Content=views[slug]; if(!info || !Content) notFound();

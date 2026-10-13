@@ -54,6 +54,8 @@ The public database policies expose only records whose state is `published` (or 
 
 Set `CMS_DASHBOARD_RPC=true` after applying the performance migration. Set `CMS_PERF_LOG=true` temporarily to emit structured server timing records for authentication and CMS queries; leave it disabled during normal operation. Protected middleware responses also expose an aggregate `Server-Timing` header without user data.
 
+Performance diagnostics also separate the time spent waiting for Supabase from rendering. `supabase.request` logs identify the service/table, HTTP status or transport error, and elapsed time without logging tokens, query parameters or content. Keep private admin responses uncached; only published public content uses the shared cache.
+
 ## School content
 
 News, events and gallery media are managed at `/admin/login`. On the Media page, select one or more images, review the compressed previews and savings, then opt approved items into the public Gallery with a caption, meaningful alternative text and category. The supplied crest remains as the static gallery fallback in `lib/content.js`.
@@ -74,6 +76,17 @@ Official domain/DNS, content approval and public launch are pending. This review
 
 `npm run check` validates public-content constraints. With a production preview running, `node scripts/browser-check.mjs` uses installed Microsoft Edge through Playwright and checks desktop/mobile routes and key interactions. Screenshots and results are in `.impeccable/review/`.
 
+With `npm run build` and a production server running, use:
+
+```sh
+npm run perf:measure -- --origin=http://127.0.0.1:3000 --label=local --samples=3 --browser
+npm run check:performance
+```
+
+`PERF_ORIGIN` changes the origin for the regression checks. `PERF_BROWSER_PATH` can select an installed Chromium browser instead of the default Microsoft Edge. Add `--database` to the measurement command to time read-only queries for published content using the configured publishable key. Results are saved under ignored `test-results/`; no credentials or article bodies are recorded. Measurements against a deployed origin and localhost are different environments and must not be compared as equivalent latency results. See `PERFORMANCE.md` for findings and verification limits.
+
 ## Asset provenance
 
 `public/images/school-crest.jpeg` is an unmodified copy of the user-supplied `phs.jpeg`. Playfair Display and Source Sans 3 were downloaded from Google Fonts; license files are beside the fonts. No generated or third-party campus photographs are used.
+
+The WOFF2 files are lossless web-font encodings of those existing TTF files. Glyph coverage and horizontal metrics were checked against the originals; the original fonts and licences are retained. FontTools and Brotli were used only for asset conversion and are not application dependencies.
