@@ -26,7 +26,7 @@ export default function Header() {
   const remainingNavigation = navigation.filter(([, href]) => href !== '/about/');
   const aboutCurrent = pathname === '/about' || pathname.startsWith('/about/');
   return <>
-    <div className="utility"><div className="container utility-inner"><span>Mhondoro, Zimbabwe</span><div><Link href="/gallery/">Gallery</Link><Link href="/alumni/">Alumni</Link><Link href="/contact/">Contact</Link><Link href="/portal/" className="utility-portal">Student / Staff Portal <ArrowUpRight size={13} aria-hidden="true" /></Link></div></div></div>
+    <div className="utility"><div className="container utility-inner"><span>Mhondoro, Zimbabwe</span><div><Link href="/gallery/">Gallery</Link><Link href="/alumni/">Alumni</Link><Link href="/contact/">Contact</Link><Link href="/portal/" className="utility-portal">Student / Staff Portal <ArrowUpRight size={13} aria-hidden="true" /></Link><Link href="/admin/login/" className="utility-admin">Website administration</Link></div></div></div>
     <header className="site-header"><div className="container header-inner">
       <Link className="brand" href="/" aria-label="Presbyterian High School home"><img src="/images/school-crest.jpeg" width="57" height="57" alt="" /><span>Presbyterian<span>High School</span></span></Link>
       <button id="menu-toggle" className="menu-toggle" aria-expanded={open} aria-controls="main-navigation" aria-label={open ? 'Close navigation' : 'Open navigation'} onClick={() => setOpen(!open)}>{open ? <X /> : <Menu />}</button>
@@ -36,7 +36,7 @@ export default function Header() {
           <div className="nav-dropdown" id="about-submenu"><Link href="/about/">About our school</Link><Link href="/about/policies/">School Policies</Link></div>
         </div>
         {remainingNavigation.map(([label, href]) => <Link key={href} href={href} aria-current={pathname === href || pathname === href.slice(0,-1) || pathname.startsWith(href) ? 'page' : undefined}>{label}</Link>)}
-        <Link href="/contact/" className="header-contact">Get in touch <ArrowUpRight size={16} aria-hidden="true" /></Link><div className="mobile-secondary"><Link href="/gallery/">Gallery</Link><Link href="/alumni/">Alumni</Link><Link href="/portal/">Student / Staff Portal <ArrowUpRight size={15} aria-hidden="true" /></Link></div>
+        <Link href="/contact/" className="header-contact">Get in touch <ArrowUpRight size={16} aria-hidden="true" /></Link><div className="mobile-secondary"><Link href="/gallery/">Gallery</Link><Link href="/alumni/">Alumni</Link><Link href="/portal/">Student / Staff Portal <ArrowUpRight size={15} aria-hidden="true" /></Link><Link href="/admin/login/">Website administration</Link></div>
       </nav>
     </div></header>
   </>;
