@@ -1,10 +1,11 @@
+import { pageMetadata } from '@/lib/seo';
 import Link from 'next/link';
 import { connection } from 'next/server';
 import { ArrowRight, CalendarDays, Search } from 'lucide-react';
 import { listPublishedNews, listPublishedNewsCategories } from '@/lib/cms/queries';
 import { formatDate } from '@/lib/cms/config';
 
-export const metadata = { title: 'School News', description: 'Read published news, announcements and stories from Presbyterian High School in Mhondoro.' };
+export const metadata = pageMetadata("School News", "Read published news, announcements and stories from Presbyterian High School in Mhondoro.", '/news/');
 export const revalidate = 60;
 export default async function NewsPage({ searchParams }) {
   await connection();

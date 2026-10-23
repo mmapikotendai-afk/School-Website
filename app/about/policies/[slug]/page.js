@@ -1,3 +1,4 @@
+import { pageMetadata } from '@/lib/seo';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ChevronRight } from 'lucide-react';
@@ -6,7 +7,7 @@ import { getPolicy, getPolicyCategory, publicPolicies } from '@/lib/policies';
 
 export const dynamicParams = false;
 export function generateStaticParams() { return publicPolicies.length ? publicPolicies.map(policy => ({ slug: policy.slug })) : [{ slug: 'no-published-policies' }]; }
-export async function generateMetadata({ params }) { const { slug } = await params; const policy = getPolicy(slug); return policy ? { title: policy.title, description: policy.description } : { title: 'Policy not found', robots: { index: false } }; }
+export async function generateMetadata({ params }) { const { slug } = await params; const policy = getPolicy(slug); return policy ? pageMetadata(policy.title, policy.description, `/about/policies/${slug}/`) : { title: 'Policy not found', robots: { index: false } }; }
 
 export default async function PolicyPage({ params }) {
   const { slug } = await params;

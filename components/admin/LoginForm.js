@@ -1,10 +1,11 @@
 'use client';
+import {withRetryMessage} from './action-feedback';
 import { useActionState } from 'react';
 import { loginAction } from '@/lib/cms/actions';
 
 const initialState = { error: '' };
 export default function LoginForm({ next = '' }) {
-  const [state, action, pending] = useActionState(loginAction, initialState);
+  const [state, action, pending] = useActionState(withRetryMessage(loginAction), initialState);
   return <form action={action} className="admin-login-form">
     <input type="hidden" name="next" value={next} />
     <label>Email address<input type="email" name="email" autoComplete="username" required /></label>

@@ -1,3 +1,4 @@
+import { pageMetadata } from '@/lib/seo';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
@@ -8,7 +9,7 @@ import { formatDate } from '@/lib/cms/config';
 export const revalidate = 60;
 export async function generateMetadata({ params }) {
   const { article } = await params; const item = await getPublishedNews(article);
-  return item ? { title: item.title, description: item.summary, openGraph: { title: item.title, description: item.summary, images: item.featured_image_url ? [{ url: item.featured_image_url, alt: item.featured_image_alt || '' }] : [] } } : { title: 'Story not found', robots: { index: false } };
+  return item ? pageMetadata(item.title, item.summary, `/news/${article}/`, item.featured_image_url) : { title: 'Story not found', robots: { index: false } };
 }
 export default async function NewsArticle({ params }) {
   const { article } = await params; const item = await getPublishedNews(article); if (!item) notFound(); const related = await getRelatedNews(item);

@@ -1,0 +1,1 @@
+export default function Loading(){return <section className="section" aria-busy="true" aria-label="Loading page"><div className="container"><p role="status">Loading school information?</p></div></section>;}

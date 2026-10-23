@@ -65,3 +65,13 @@
 @media(max-width:480px){.pathway-list ul{grid-template-columns:1fr}.academic-form-body .admin-form-grid{grid-template-columns:1fr}.academic-form-body .admin-inline-actions{align-items:stretch;flex-direction:column}.academic-form-body .admin-inline-actions>.button,.academic-form-body>.button{width:100%}}
 .entry-requirements strong b{display:inline-block;margin-inline:4px}
 
+
+/* Production-readiness additions retain the existing palette and type. */
+.consent-banner{position:fixed;z-index:110;bottom:0;left:0;right:0;background:var(--paper);border-top:1px solid var(--line);padding:24px max(20px,calc((100vw - 1240px)/2));max-height:80dvh;overflow:auto;padding-bottom:calc(24px + env(safe-area-inset-bottom))}.consent-banner h2{font-size:26px}.consent-banner p{font-size:15px;max-width:75ch;margin:12px 0}.consent-banner a{text-decoration:underline}.consent-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}.cookie-settings{position:relative;display:block;margin:10px auto;min-height:44px;color:var(--navy);text-decoration:underline}.mobile-cta{display:none}.field-error{display:block;color:var(--red);font-size:14px}.enquiry-form [aria-invalid=true]{border-color:var(--red)}.public-cover img{width:100%;aspect-ratio:16/9;object-fit:cover}.footer-utility-links{flex-wrap:wrap}button:disabled{cursor:wait;opacity:.65}
+@media(max-width:720px){.mobile-cta{display:block;position:sticky;bottom:0;background:white;padding:10px 20px calc(10px + env(safe-area-inset-bottom));z-index:30;border-top:1px solid var(--line)}.mobile-cta .button{width:100%}.hero-actions{flex-wrap:wrap}.hero-copy{min-width:0}.filter-row button{min-height:44px}.enquiry-form input:not([type=checkbox]),.enquiry-form select,.enquiry-form textarea{font-size:16px}}
+
+@media(max-width:370px){.hero-grid,.life-grid{grid-template-columns:minmax(0,1fr)}.hero-copy h1{font-size:40px}.motto-panel{padding:34px 24px}.motto-panel blockquote{font-size:37px}.hero-identity{min-width:0}.identity-top{gap:10px}.editorial-links a{gap:12px}.enquiry-form{padding:24px 18px}}
+
+.footer-top>div>p{color:#c4cbe6;font-size:14px}
+
+body:has(.consent-banner) .mobile-cta,body:has(#menu-toggle[aria-expanded=true]) .mobile-cta{visibility:hidden}

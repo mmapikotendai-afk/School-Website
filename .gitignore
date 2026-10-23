@@ -9,3 +9,6 @@ playwright-report/
 .impeccable/review/
 .sites.local/
 *.zip
+
+# Local npm advisory and dependency-download cache
+.tools/npm-cache/

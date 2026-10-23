@@ -1,0 +1,14 @@
+import {chromium} from '@playwright/test';
+import assert from 'node:assert/strict';
+const browser=await chromium.launch({channel:'msedge',headless:true});
+try{const context=await browser.newContext({viewport:{width:375,height:812}});const page=await context.newPage();page.setDefaultNavigationTimeout(60000);
+const origin='http://127.0.0.1:3000';const titles=new Set();
+for(const path of ['/','/about/','/academics/','/admissions/','/school-life/','/news/','/events/','/gallery/','/alumni/','/contact/','/privacy-policy/','/terms/','/about/policies/']){const r=await page.goto(origin+path);assert.equal(r.status(),200);const title=await page.title();assert(!titles.has(title),title);titles.add(title);assert(await page.locator('meta[name=description]').getAttribute('content'));assert(await page.locator('meta[property="og:image"]').getAttribute('content'));assert(await page.locator('meta[name="twitter:card"]').getAttribute('content'));assert(await page.locator('link[rel=canonical]').getAttribute('href'));assert.equal(await page.locator('img:not([alt])').count(),0);}
+for(const path of ['/robots.txt','/sitemap.xml','/favicon.ico','/icon.png','/apple-icon.png','/social-card.png'])assert.equal((await context.request.get(origin+path)).status(),200,path);
+const xml=await (await context.request.get(origin+'/sitemap.xml')).text();assert(!xml.includes('/admin/'));assert(!xml.includes('/portal/'));assert(xml.includes('/privacy-policy/'));
+assert.equal((await page.goto(origin+'/this-page-does-not-exist/')).status(),404);assert(await page.getByRole('link',{name:'Back to home'}).isVisible());
+await page.goto(origin+'/contact/');await page.getByRole('button',{name:'Download enquiry draft'}).click();assert.equal(await page.locator('[aria-invalid=true]').count(),4);assert.equal(await page.locator('input[name=name]').evaluate(el=>el===document.activeElement),true);
+await page.getByLabel('Your name',{exact:true}).fill('Test Family');await page.getByLabel('Email address',{exact:true}).fill('test@example.com');await page.getByLabel('Your enquiry',{exact:true}).fill('Please share the current admissions information.');await page.getByRole('checkbox').check();const download=page.waitForEvent('download');await page.getByRole('button',{name:'Download enquiry draft'}).click();await download;assert.equal(await page.getByLabel('Your name',{exact:true}).inputValue(),'Test Family');
+assert.equal(await page.locator('script[src*="googletagmanager"]').count(),0,'No unconfigured tracking');const headers=(await context.request.get(origin)).headers();assert.equal(headers['x-content-type-options'],'nosniff');assert.equal(headers['x-frame-options'],'DENY');
+console.log('Readiness checks passed: unique metadata, assets, robots/sitemap, HTTP 404, accessible validation, draft download, no unconfigured tracking, security headers.');
+}finally{await browser.close();}

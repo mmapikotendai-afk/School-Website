@@ -1,4 +1,5 @@
 'use client';
+import {withRetryMessage} from './action-feedback';
 import { useActionState, useState } from 'react';
 import { Plus, Save, Trash2 } from 'lucide-react';
 import { A_LEVEL_PATHWAYS } from '@/lib/academics';
@@ -13,7 +14,7 @@ function FormMessage({ state }) {
 }
 
 export function RequirementsForm({ requirements }) {
-  const [state, action, pending] = useActionState(saveALevelSettingsAction, initialState);
+  const [state, action, pending] = useActionState(withRetryMessage(saveALevelSettingsAction), initialState);
   return <form action={action} className="admin-panel academic-settings-form">
     <div className="admin-panel-head"><div><h2>Entry requirements</h2><span>Shown on the Admissions page</span></div></div>
     <div className="academic-form-body">
@@ -31,7 +32,7 @@ export function RequirementsForm({ requirements }) {
 function CombinationForm({ combination, canDelete, isNew = false }) {
   const initialPathway = combination?.pathway || A_LEVEL_PATHWAYS[0].id;
   const [pathway, setPathway] = useState(initialPathway);
-  const [state, action, pending] = useActionState(saveALevelCombinationAction, initialState);
+  const [state, action, pending] = useActionState(withRetryMessage(saveALevelCombinationAction), initialState);
   const pathwayData = A_LEVEL_PATHWAYS.find(item => item.id === pathway);
   return <form action={action} className="admin-panel combination-editor">
     {combination?.id && <input type="hidden" name="id" value={combination.id}/>} 
@@ -56,8 +57,9 @@ function CombinationForm({ combination, canDelete, isNew = false }) {
 
 function CombinationDelete({ id, name }) {
   const [confirming, setConfirming] = useState(false);
+  const [deleteState,deleteAction,deleting]=useActionState(withRetryMessage(async (_state,data)=>deleteALevelCombinationAction(data)),{});
   if (!confirming) return <button type="button" className="admin-delete-button" onClick={() => setConfirming(true)}><Trash2 size={17}/>Delete</button>;
-  return <div className="delete-confirm"><span>Delete “{name}” permanently?</span><button type="submit" formAction={deleteALevelCombinationAction} className="delete-confirm-action">Confirm delete</button><button type="button" onClick={() => setConfirming(false)}>Cancel</button></div>;
+  return <div className="delete-confirm">{deleteState?.error&&<p role="alert">{deleteState.error}</p>}<span>Delete “{name}” permanently?</span><button type="submit" formAction={deleteAction} disabled={deleting} className="delete-confirm-action">Confirm delete</button><button type="button" onClick={() => setConfirming(false)}>Cancel</button></div>;
 }
 
 export default function AcademicsManager({ data, role }) {

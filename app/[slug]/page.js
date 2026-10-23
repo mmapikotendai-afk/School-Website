@@ -1,5 +1,6 @@
+import { pageMetadata } from '@/lib/seo';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { redirect, notFound } from 'next/navigation';
 import { ChevronRight } from 'lucide-react';
 import { pageInfo } from '@/lib/content';
 import * as Pages from '@/components/PageContent';
@@ -9,8 +10,8 @@ const views = {about: Pages.About, academics: Pages.Academics, admissions: Pages
 export const dynamicParams = false;
 // Dedicated routes such as /news must not also be emitted by this static route.
 export function generateStaticParams() {return Object.keys(views).map(slug => ({slug}));}
-export async function generateMetadata({params}) {const {slug}=await params; const info=pageInfo[slug];return {title:info?.short,description:info?.description};}
+export async function generateMetadata({params}) {const {slug}=await params; const info=pageInfo[slug];return info ? { ...pageMetadata(info.short, info.description, `/${slug}/`), ...(slug === 'portal' ? {robots:{index:false,follow:false}} : {}) } : {title:'Page not found',robots:{index:false}};}
 export default async function InformationPage({params}) {
-  const {slug}=await params; const info=pageInfo[slug]; const Content=views[slug]; if(!info || !Content) notFound();
+  const {slug}=await params; if(slug === 'privacy') redirect('/privacy-policy/'); const info=pageInfo[slug]; const Content=views[slug]; if(!info || !Content) notFound();
   return <><section className={`page-hero ${slug === 'admissions' ? 'page-hero-admissions' : ''}`}><div className="container"><nav aria-label="Breadcrumb" className="breadcrumbs"><Link href="/">Home</Link><ChevronRight size={13}/><span aria-current="page">{info.short}</span></nav><h1>{info.title}</h1><p>{info.description}</p></div><span className="page-hero-rule" aria-hidden="true"/></section><Content/>{!['admissions','contact','portal','privacy'].includes(slug) && <AdmissionCTA/>}</>;
 }

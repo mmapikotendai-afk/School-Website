@@ -1,0 +1,18 @@
+'use client';
+import {useEffect,useState,useRef} from 'react';
+import {usePathname} from 'next/navigation';
+import Script from 'next/script';
+import Link from 'next/link';
+const id=process.env.NEXT_PUBLIC_GA_ID;
+const enabled=/^G-[A-Z0-9]+$/.test(id||'');
+const key='phs-consent-v1';
+export default function Consent(){
+ const path=usePathname(); const [choice,setChoice]=useState(null); const [open,setOpen]=useState(false); const [ready,setReady]=useState(false); const [allowed,setAllowed]=useState(false); const last=useRef(null); const currentChoice=useRef(choice); currentChoice.current=choice;
+ useEffect(()=>{if(enabled)window['ga-disable-'+id]=choice!=='accepted'||path.startsWith('/admin');},[choice,path]);
+ useEffect(()=>{try {const c=JSON.parse(localStorage.getItem(key)); if(c?.version===1 && Date.now()-c.at<180*86400000 && ['accepted','rejected'].includes(c.value)){setChoice(c.value);setAllowed(c.value==='accepted');}else setOpen(true);}catch{setOpen(true);}},[]);
+ useEffect(()=>{if(!enabled||choice!=='accepted'||!ready||path.startsWith('/admin')||last.current===path)return;last.current=path;window.gtag('event','page_view',{page_location:window.location.origin+path,page_path:path,page_title:'School website'});},[path,choice,ready]);
+ useEffect(()=>{function track(){if(choice==='accepted'&&ready&&!path.startsWith('/admin'))window.gtag('event','enquiry_draft_prepared',{method:'local_draft'});}window.addEventListener('school:enquiry-draft',track);return()=>window.removeEventListener('school:enquiry-draft',track);},[choice,ready,path]);
+ function save(value){setChoice(value);setOpen(false);setAllowed(value==='accepted');try{localStorage.setItem(key,JSON.stringify({version:1,value,at:Date.now()}));}catch{} if(value==='rejected'){window['ga-disable-'+id]=true;document.cookie.split(';').forEach(c=>{const name=c.split('=')[0].trim();if(name==='_ga'||name.startsWith('_ga_')){const parts=location.hostname.split('.');for(let i=0;i<parts.length;i++){document.cookie=name+'=; Max-Age=0; path=/; domain=.'+parts.slice(i).join('.');}document.cookie=name+'=; Max-Age=0; path=/';}});if(ready)location.reload();}else window['ga-disable-'+id]=false;}
+ if(!enabled||path.startsWith('/admin'))return null;
+ return <>{choice==='accepted'&&<Script id="school-analytics" src={'https://www.googletagmanager.com/gtag/js?id='+id} onReady={()=>{if(currentChoice.current!=='accepted'||window.location.pathname.startsWith('/admin'))return;window.dataLayer=window.dataLayer||[];window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};window.gtag('js',new Date());window.gtag('config',id,{send_page_view:false,page_location:window.location.origin+path,page_referrer:window.location.origin,allow_google_signals:false,allow_ad_personalization_signals:false});setReady(true);}}/>}<button className="cookie-settings" onClick={()=>setOpen(true)}>Cookie preferences</button>{open&&<section className="consent-banner" aria-label="Cookie preferences"><h2>Your privacy choices</h2><p>Essential staff sign-in cookies support the CMS. Optional Google Analytics measures public page visits only with your permission. Enquiry text and URL query parameters are never sent. <Link href="/privacy-policy/">Privacy policy</Link></p><label><input type="checkbox" checked={allowed} onChange={e=>setAllowed(e.target.checked)}/> Allow optional analytics</label><div className="consent-actions"><button className="button button-primary" onClick={()=>save('accepted')}>Accept</button><button className="button button-primary" onClick={()=>save('rejected')}>Reject</button><button className="button" onClick={()=>save(allowed?'accepted':'rejected')}>Save preferences</button></div></section>}</>;
+}

@@ -77,7 +77,7 @@ export async function POST(request) {
     }
     return Response.json({ id: data.id, publicUrl: publicData.publicUrl, optimizedBytes: output.info.size, width: output.info.width, height: output.info.height, publishedToGallery: publishToGallery });
   } catch (error) {
-    console.error('Media upload failed:', error);
+    console.error(JSON.stringify({event:'media_upload_failed',stage}));
     if (stage === 'validation') return Response.json({ error: 'The image is corrupted or could not be safely decoded. Choose another image.' }, { status: 400 });
     return Response.json({ error: 'The compressed image passed validation, but storage failed. Try uploading it again.' }, { status: 502 });
   }

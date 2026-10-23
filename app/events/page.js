@@ -1,9 +1,10 @@
+import { pageMetadata } from '@/lib/seo';
 import Link from 'next/link';
 import { ArrowRight, CalendarDays, MapPin, Newspaper } from 'lucide-react';
 import { listPublishedEvents } from '@/lib/cms/queries';
 import { formatDateTime, SITE_TIME_ZONE } from '@/lib/cms/config';
 
-export const metadata = { title: 'School Events', description: 'Upcoming and past events at Presbyterian High School in Mhondoro.' };
+export const metadata = pageMetadata("School Events", "Upcoming and past events at Presbyterian High School in Mhondoro.", '/events/');
 export const revalidate = 60;
 function EventCard({ item }) { return <article className="event-card">{item.cover_image_url && <Link href={`/events/${item.slug}/`} className="event-card-image"><img src={item.cover_image_url} alt={item.cover_image_alt || ''} loading="lazy"/></Link>}<div className="event-date"><strong>{new Intl.DateTimeFormat('en-ZW',{day:'2-digit',timeZone:SITE_TIME_ZONE}).format(new Date(item.start_at))}</strong><span>{new Intl.DateTimeFormat('en-ZW',{month:'short',timeZone:SITE_TIME_ZONE}).format(new Date(item.start_at))}</span></div><div><span className="meta">{item.event_status}</span><h2><Link href={`/events/${item.slug}/`}>{item.title}</Link></h2><p>{item.summary}</p><span className="event-card-fact"><CalendarDays size={16}/>{formatDateTime(item.start_at)}</span><span className="event-card-fact"><MapPin size={16}/>{item.venue}</span><Link href={`/events/${item.slug}/`} className="text-link">Event details <ArrowRight size={16}/></Link></div></article>; }
 export default async function EventsPage() {

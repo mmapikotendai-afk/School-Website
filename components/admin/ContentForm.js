@@ -1,5 +1,6 @@
 'use client';
 
+import {withRetryMessage} from './action-feedback';
 import { useActionState, useState } from 'react';
 import Link from 'next/link';
 import { Eye, Save } from 'lucide-react';
@@ -13,7 +14,7 @@ export default function ContentForm({ type, record }) {
   const statuses = news ? NEWS_STATUSES : EVENT_STATUSES;
   const [status, setStatus] = useState(record?.status || 'draft');
   const action = news ? saveNewsAction : saveEventAction;
-  const [formState, formAction, pending] = useActionState(action, { error: '' });
+  const [formState, formAction, pending] = useActionState(withRetryMessage(action), { error: '' });
   const listPath = news ? '/admin/news/' : '/admin/events/';
   const publishLabel = status === 'scheduled' ? 'Publication date and time' : 'Published at';
   const visibilityMessage = {

@@ -1,0 +1,2 @@
+'use client';
+export default function Error({reset}){return <section className="section"><div className="container empty-state"><h1>This page could not load.</h1><p>Please try again. Any enquiry draft still on this page has not been submitted.</p><button className="button button-primary" onClick={reset}>Try again</button></div></section>;}
