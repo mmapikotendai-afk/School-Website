@@ -10,22 +10,22 @@ The Next.js middleware protects all page mutations (including Server Actions pos
 
 | Policy | Default | Purpose |
 |---|---|---|
-| ATTEMPTS | 3 / 300 seconds per identity | One shared quota across non-login page mutations, APIs, uploads and filtered/paginated news |
+| ATTEMPTS | 120 / 60 seconds per identity | One shared quota across non-login page mutations, APIs, uploads and filtered/paginated news |
 | INGRESS | 300 / 60 seconds per IP | Coarse pre-authentication guard protecting auth verification work |
 
-Authenticated non-login requests use Supabase user ID; anonymous requests use the trusted client IP. The fourth and subsequent attempts return 429 until exactly 300 seconds after the first attempt. Denied attempts do not extend the window. Different endpoints share the same allowance. Ordinary public page views and static assets remain unrestricted. The exact denial text is: ?The request could not be completed. If you have made several attempts, wait a few minutes before trying again.?
+Authenticated non-login requests use Supabase user ID; anonymous requests use the trusted client IP. Requests above 120 per minute return 429 until the current window expires. This request quota is independent of the three-failed-login/five-minute rule. Denied attempts do not extend the window. Different endpoints share the same allowance. Ordinary public page views and static assets remain unrestricted. The exact denial text is: ?The request could not be completed. If you have made several attempts, wait a few minutes before trying again.?
 
 Each policy uses a counter window beginning at the first request, with an atomic Redis EVAL increment + initial expiry + TTL read. Requests beyond the quota do not extend expiry. Concurrent requests share the same counter. Up to a double quota can occur across a window boundary; this is request limiting, not an execution-concurrency semaphore or volumetric DDoS protection.
 
 There are no website password-reset, public sign-up, or AI endpoints. No unused routes were invented. Supabase's directly accessible authentication service needs its own provider-side auth limits/CAPTCHA; website limits cannot protect direct requests to another service. Apply an appropriate new policy before introducing those features.
 
-## Production configuration (required before deployment)
+## Shared production counters (optional Redis configuration)
 
 Set server-only RATE_LIMIT_REDIS_URL to an HTTPS Redis REST endpoint supporting Upstash-compatible JSON command bodies and EVAL. Set RATE_LIMIT_REDIS_TOKEN to its restricted credential. EVAL must be permitted for the limiter namespace. Set RATE_LIMIT_KEY_SECRET to a cryptographically random secret of at least 32 bytes, shared by every application instance. Use separate stores/secrets for staging and production. Do not prefix these variables with NEXT_PUBLIC_. No additional Redis library is needed.
 
-Production defaults to Redis and rejects memory mode. Development defaults to a bounded in-process store (10,000 keys), solely for local testing. Never use it for multiple instances. The shared Redis counter is atomic and does not rely on application clocks. Keys contain policy and an HMAC of user ID or IP, not raw personal identifiers, passwords, email, tokens or request bodies. Counters expire automatically.
+Request counters use Redis when credentials are configured, otherwise a bounded in-process store (10,000 keys). Set `RATE_LIMIT_STORE=redis` with Redis credentials to use Redis, or `memory` to explicitly use local counters. A legacy `RATE_LIMIT_STORE=redis` value with no Redis URL or token uses local counters so missing optional infrastructure cannot disable the CMS. Partial or broken Redis credentials still fail closed. Local counters are per instance and reset when a process restarts; shared enforcement across instances requires Redis. Production logs `request_local_rate_limit` when using local counters. The shared Redis counter is atomic and does not rely on application clocks. Keys contain policy and an HMAC of user ID or IP, not raw personal identifiers, passwords, email, tokens or request bodies. Counters expire automatically.
 
-For overrides use RATE_LIMIT_<POLICY>_MAX and RATE_LIMIT_<POLICY>_SECONDS, for example RATE_LIMIT_ATTEMPTS_MAX=3 and RATE_LIMIT_ATTEMPTS_SECONDS=300. Values must be positive integers. All instances must use the same configuration. Changes apply after process restart/deployment; existing Redis windows retain their initial TTL. Changing the key secret resets identities/counters and should not be used as normal quota adjustment.
+For overrides use RATE_LIMIT_<POLICY>_MAX and RATE_LIMIT_<POLICY>_SECONDS, for example RATE_LIMIT_ATTEMPTS_MAX=120 and RATE_LIMIT_ATTEMPTS_SECONDS=60. Values must be positive integers. All instances must use the same configuration. Changes apply after process restart/deployment; existing Redis windows retain their initial TTL. Changing the key secret resets identities/counters and should not be used as normal quota adjustment.
 
 ## Proxy trust
 
@@ -35,7 +35,7 @@ For x-forwarded-for, RATE_LIMIT_PROXY_HOPS selects a fixed number of trusted hop
 
 ## Responses, failures and UX
 
-Quota denials return HTTP 429, Retry-After (seconds), Cache-Control: no-store and a safe JSON error message. Missing/invalid production configuration, Redis timeout, malformed responses, exhausted development memory or Redis failures return HTTP 503 with Retry-After: 30. All protected operations fail closed; there is no silent per-instance fallback. Redis calls time out after two seconds. Ordinary public pages remain available; news query variants, APIs and writes pause until Redis recovers. Authenticated CMS page GETs retain normal authentication behavior.
+Quota denials return HTTP 429, Retry-After (seconds), Cache-Control: no-store and a safe JSON error message. Explicit Redis configuration errors, Redis timeout, malformed responses, exhausted local memory or Redis failures return HTTP 503 with Retry-After: 30. A selected Redis store fails closed on errors and never silently falls back. An installation without Redis credentials uses local counters from the start. Redis calls time out after two seconds. Ordinary public pages remain available; news query variants, APIs and writes pause until Redis recovers. Authenticated CMS page GETs retain normal authentication behavior.
 
 Uploads show the JSON retry message. Server Action transport failures cannot deliver action state; CMS/login controls catch the transport error and show a generic exact denial message. They do not expose internal exceptions. Retry-After remains available on the HTTP response. No automatic retry of mutations occurs, avoiding duplicate writes.
 
