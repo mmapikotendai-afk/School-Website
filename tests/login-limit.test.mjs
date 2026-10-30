@@ -37,3 +37,25 @@ test('Redis uses atomic check/fail/reset commands and hashes account identities'
  const result=await attemptLogin('private@example.org',success,{env:{NODE_ENV:'test'},store});
  assert.equal(result.data.user.id,'staff');assert.equal(command[0],'EVAL');assert.equal(command[1],LOGIN_LUA);assert.equal(command[4],'reset');assert(!command[3].includes('private'));assert.equal(command[5],'3');assert.equal(command[6],'300000');
 });
+
+test('production login works without optional Redis settings and still locks after three failures',async()=>{
+ const opts={env:{NODE_ENV:'production'},log:()=>{}};
+ assert.equal((await attemptLogin('production-success@example.org',success,opts)).data.user.id,'staff');
+ assert.match((await attemptLogin('production-failure@example.org',invalid,opts)).error,/2 attempts remaining/);
+ assert.match((await attemptLogin('production-failure@example.org',invalid,opts)).error,/1 attempt remaining/);
+ assert.equal((await attemptLogin('production-failure@example.org',invalid,opts)).retryAfter,300);
+ let calls=0;
+ assert.equal((await attemptLogin('production-failure@example.org',async()=>{calls++;return success();},opts)).retryAfter,300);
+ assert.equal(calls,0);
+});
+test('request limiter Redis mode does not accidentally require Redis for login',async()=>{
+ const result=await attemptLogin('request-config@example.org',success,{env:{NODE_ENV:'production',RATE_LIMIT_STORE:'redis'},log:()=>{}});
+ assert.equal(result.data.user.id,'staff');
+});
+test('explicit Redis configuration errors fail closed and identify the stage without leaking secrets',async()=>{
+ const logs=[];let calls=0;
+ const result=await attemptLogin('private@example.org',async()=>{calls++;return success();},{env:{NODE_ENV:'production',RATE_LIMIT_LOGIN_STORE:'redis'},log:e=>logs.push(e)});
+ assert.match(result.error,/temporarily unavailable/);assert.equal(calls,0);
+ assert.deepEqual(logs,[{event:'login_unavailable',stage:'configuration'}]);
+ assert(!JSON.stringify(logs).includes('private'));
+});
