@@ -1,13 +1,19 @@
+## Login failures
+
+Login bypasses the middleware request quotas. The server action uses a separate account counter (normalized email stored only as an HMAC). Only Supabase `invalid_credentials` failures count. Three failures trigger a full 300-second lock beginning at the third failure; blocked retries do not extend it. Successful authentication clears the counter. Page views, successful logins, missing form fields and service errors do not consume login attempts. Accounts have independent counters even when no trusted IP header is configured. Redis outages return an availability message, never a false password-lockout message. Production still requires the Redis settings below.
+
+Configure `RATE_LIMIT_LOGIN_MAX=3` and `RATE_LIMIT_LOGIN_SECONDS=300`. Run `node --test tests/login-limit.test.mjs` for credential failure, expiry, success/reset, identity isolation and outage regression checks.
+
 # Rate limiting
 
 The Next.js middleware protects all page mutations (including Server Actions posted to alternate page URLs), /api/* requests, and filtered/paginated /news requests. Static assets and ordinary public page views do not consume quotas. Authentication still uses verified Supabase claims and staff authorisation/RLS; quotas never grant access.
 
 | Policy | Default | Purpose |
 |---|---|---|
-| ATTEMPTS | 3 / 300 seconds per identity | One shared quota across login, page mutations, APIs, uploads and filtered/paginated news |
+| ATTEMPTS | 3 / 300 seconds per identity | One shared quota across non-login page mutations, APIs, uploads and filtered/paginated news |
 | INGRESS | 300 / 60 seconds per IP | Coarse pre-authentication guard protecting auth verification work |
 
-Authenticated requests (including login requests with an existing verified session) use Supabase user ID; anonymous requests use the trusted client IP. The fourth and subsequent attempts return 429 until exactly 300 seconds after the first attempt. Denied attempts do not extend the window. Different endpoints share the same allowance. Ordinary public page views and static assets remain unrestricted. The exact denial text is: ?The request could not be completed. If you have made several attempts, wait a few minutes before trying again.?
+Authenticated non-login requests use Supabase user ID; anonymous requests use the trusted client IP. The fourth and subsequent attempts return 429 until exactly 300 seconds after the first attempt. Denied attempts do not extend the window. Different endpoints share the same allowance. Ordinary public page views and static assets remain unrestricted. The exact denial text is: ?The request could not be completed. If you have made several attempts, wait a few minutes before trying again.?
 
 Each policy uses a counter window beginning at the first request, with an atomic Redis EVAL increment + initial expiry + TTL read. Requests beyond the quota do not extend expiry. Concurrent requests share the same counter. Up to a double quota can occur across a window boundary; this is request limiting, not an execution-concurrency semaphore or volumetric DDoS protection.
 

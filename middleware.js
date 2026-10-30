@@ -5,6 +5,8 @@ import {checkLimit,clientIP,limitResponse} from '@/lib/rate-limit';
 export async function middleware(request){
  const path=request.nextUrl.pathname;const mutation=!['GET','HEAD','OPTIONS'].includes(request.method);
  const api=path.startsWith('/api/');
+ // Login failures are counted in loginAction after credentials are checked.
+ if(/^\/admin\/login\/?$/.test(path))return updateSession(request);
  const search=path.replace(/\/$/,'')==='/news'&&(request.nextUrl.searchParams.has('category')||request.nextUrl.searchParams.has('page'));
  if(api||mutation||search){
   const ip='ip:'+clientIP(request.headers);

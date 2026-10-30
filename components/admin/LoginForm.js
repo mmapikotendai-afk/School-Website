@@ -5,7 +5,7 @@ import { loginAction } from '@/lib/cms/actions';
 
 const initialState = { error: '' };
 export default function LoginForm({ next = '' }) {
-  const [state, action, pending] = useActionState(withRetryMessage(loginAction), initialState);
+  const [state, action, pending] = useActionState(withRetryMessage(loginAction, 'Sign-in could not be completed. Please try again shortly.'), initialState);
   return <form action={action} className="admin-login-form">
     <input type="hidden" name="next" value={next} />
     <label>Email address<input type="email" name="email" autoComplete="username" required /></label>
