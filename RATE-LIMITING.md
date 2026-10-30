@@ -4,12 +4,10 @@ The Next.js middleware protects all page mutations (including Server Actions pos
 
 | Policy | Default | Purpose |
 |---|---|---|
-| LOGIN | 10 / 900 seconds | Login submissions and anonymous page mutations; count failures and successes to bound auth work |
-| INGRESS | 300 / 60 seconds per IP | Coarse pre-authentication guard on other protected requests |
-| API | 120 / 60 seconds | General APIs, keyed by verified user ID or anonymous IP |
-| WRITE | 60 / 60 seconds | Staff Server Actions, including publishing, deletion and academics |
-| UPLOAD | 10 / 60 seconds | Media requests before multipart parsing/Sharp processing; permits small batches |
-| SEARCH | 60 / 60 seconds | News category/page query requests before server rendering/database access |
+| ATTEMPTS | 3 / 300 seconds per identity | One shared quota across login, page mutations, APIs, uploads and filtered/paginated news |
+| INGRESS | 300 / 60 seconds per IP | Coarse pre-authentication guard protecting auth verification work |
+
+Authenticated requests (including login requests with an existing verified session) use Supabase user ID; anonymous requests use the trusted client IP. The fourth and subsequent attempts return 429 until exactly 300 seconds after the first attempt. Denied attempts do not extend the window. Different endpoints share the same allowance. Ordinary public page views and static assets remain unrestricted. The exact denial text is: ?The request could not be completed. If you have made several attempts, wait a few minutes before trying again.?
 
 Each policy uses a counter window beginning at the first request, with an atomic Redis EVAL increment + initial expiry + TTL read. Requests beyond the quota do not extend expiry. Concurrent requests share the same counter. Up to a double quota can occur across a window boundary; this is request limiting, not an execution-concurrency semaphore or volumetric DDoS protection.
 
@@ -21,7 +19,7 @@ Set server-only RATE_LIMIT_REDIS_URL to an HTTPS Redis REST endpoint supporting 
 
 Production defaults to Redis and rejects memory mode. Development defaults to a bounded in-process store (10,000 keys), solely for local testing. Never use it for multiple instances. The shared Redis counter is atomic and does not rely on application clocks. Keys contain policy and an HMAC of user ID or IP, not raw personal identifiers, passwords, email, tokens or request bodies. Counters expire automatically.
 
-For overrides use RATE_LIMIT_<POLICY>_MAX and RATE_LIMIT_<POLICY>_SECONDS, for example RATE_LIMIT_UPLOAD_MAX=20 and RATE_LIMIT_UPLOAD_SECONDS=60. Values must be positive integers. All instances must use the same configuration. Changes apply after process restart/deployment; existing Redis windows retain their initial TTL. Changing the key secret resets identities/counters and should not be used as normal quota adjustment.
+For overrides use RATE_LIMIT_<POLICY>_MAX and RATE_LIMIT_<POLICY>_SECONDS, for example RATE_LIMIT_ATTEMPTS_MAX=3 and RATE_LIMIT_ATTEMPTS_SECONDS=300. Values must be positive integers. All instances must use the same configuration. Changes apply after process restart/deployment; existing Redis windows retain their initial TTL. Changing the key secret resets identities/counters and should not be used as normal quota adjustment.
 
 ## Proxy trust
 
@@ -33,7 +31,7 @@ For x-forwarded-for, RATE_LIMIT_PROXY_HOPS selects a fixed number of trusted hop
 
 Quota denials return HTTP 429, Retry-After (seconds), Cache-Control: no-store and a safe JSON error message. Missing/invalid production configuration, Redis timeout, malformed responses, exhausted development memory or Redis failures return HTTP 503 with Retry-After: 30. All protected operations fail closed; there is no silent per-instance fallback. Redis calls time out after two seconds. Ordinary public pages remain available; news query variants, APIs and writes pause until Redis recovers. Authenticated CMS page GETs retain normal authentication behavior.
 
-Uploads show the JSON retry message. Server Action transport failures cannot deliver action state; CMS/login controls catch the transport error and show a generic wait-and-retry message. They do not expose internal exceptions. Retry-After remains available on the HTTP response. No automatic retry of mutations occurs, avoiding duplicate writes.
+Uploads show the JSON retry message. Server Action transport failures cannot deliver action state; CMS/login controls catch the transport error and show a generic exact denial message. They do not expose internal exceptions. Retry-After remains available on the HTTP response. No automatic retry of mutations occurs, avoiding duplicate writes.
 
 ## Monitoring
 
@@ -41,13 +39,13 @@ Collect structured server warnings with events rate_limit_blocked and rate_limit
 
 ## Verification
 
-Run node --test tests/rate-limit.test.mjs. Tests cover normal traffic, bursts, 20 simultaneous requests with exactly three allowed, recovery with an injected clock, isolated identities, shared-store clients, trusted proxy parsing, response status/headers, sensitive-log exclusion, outage behavior, invalid configuration, forbidden production memory, and the Redis REST atomic-command contract. The backend in concurrency tests is a deterministic shared test store, not a live Redis deployment. A real Redis URL/token was not supplied; multi-instance Redis integration and ingress header behavior must be smoke-tested on deployment.
+Run node --test tests/rate-limit.test.mjs. Tests cover normal traffic, bursts, 20 simultaneous requests with exactly three allowed and a 300-second retry, plus exact five-minute boundary checks for user and IP identities, recovery with an injected clock, isolated identities, shared-store clients, trusted proxy parsing, response status/headers, sensitive-log exclusion, outage behavior, invalid configuration, forbidden production memory, and the Redis REST atomic-command contract. The backend in concurrency tests is a deterministic shared test store, not a live Redis deployment. A real Redis URL/token was not supplied; multi-instance Redis integration and ingress header behavior must be smoke-tested on deployment.
 
 References: https://redis.io/docs/latest/commands/incr/ and https://redis.io/docs/latest/develop/use-cases/rate-limiter/ describe atomic Redis rate counters. Implementation uses Next.js middleware/Response conventions.
 
 ### Executed results
 
-- Five Node tests passed, including burst/concurrency/reset and Redis REST contract checks.
+- Seven Node tests passed, including burst/concurrency/reset and Redis REST contract checks.
 - npm run check passed.
 - npm run build passed on Next.js 15.5.28; pre-existing unreachable Supabase queries logged empty-state fallbacks.
 - Production HTTP smoke tests passed: homepage 200; login POST, upload POST, filtered news GET and a Server Action POST on /about/ each returned 503 with Retry-After: 30 when Redis was unconfigured. Responses contained no store internals.
